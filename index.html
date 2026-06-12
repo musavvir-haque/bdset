@@ -1,1262 +1,1130 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI in Immersive Technology – Exam Study Guide</title>
+<title>AI in Immersive Technology – Complete Study Guide</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root {
+  --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--border:#2e3350;
+  --accent:#6c8bff;--green:#34d399;--yellow:#fbbf24;--red:#f87171;
+  --text:#e2e8f0;--muted:#8892b0;
+  --math-bg:#1e3a5f;--math-fg:#60a5fa;
+  --py-bg:#1a3a2a;--py-fg:#34d399;
+  --vr-bg:#2d1b4e;--vr-fg:#c084fc;
+  --job-bg:#2d2010;--job-fg:#fbbf24;
+  --code-bg:#141720;--code-fg:#a5f3fc;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;font-size:15px;}
 
-  :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #22263a;
-    --border: #2e3350;
-    --accent: #6c8bff;
-    --accent2: #a78bfa;
-    --green: #34d399;
-    --yellow: #fbbf24;
-    --text: #e2e8f0;
-    --muted: #8892b0;
-    --tag-math: #1e3a5f;
-    --tag-math-text: #60a5fa;
-    --tag-py: #1a3a2a;
-    --tag-py-text: #34d399;
-    --tag-vr: #2d1b4e;
-    --tag-vr-text: #c084fc;
-  }
+/* NAV TABS */
+.nav-tabs{position:sticky;top:0;z-index:200;background:rgba(15,17,23,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;gap:0;overflow-x:auto;}
+.nav-tab{padding:14px 20px;cursor:pointer;font-size:0.85rem;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;flex-shrink:0;}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{color:#fff;border-bottom-color:var(--accent);}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* SEARCH BAR */
+.search-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.search-input{flex:1;min-width:180px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:0.9rem;font-family:inherit;outline:none;transition:border-color .2s;}
+.search-input:focus{border-color:var(--accent);}
+.filter-btn{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:0.82rem;font-family:inherit;transition:all .2s;white-space:nowrap;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(108,139,255,0.1);}
+.exp-btn{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:0.82rem;font-family:inherit;transition:all .2s;}
+.exp-btn:hover{border-color:var(--green);color:var(--green);}
+.count-lbl{color:var(--muted);font-size:0.8rem;margin-left:auto;}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.7;
-    font-size: 15px;
-  }
+/* PAGE SECTIONS */
+.page{display:none;padding:0 0 60px;}
+.page.active{display:block;}
 
-  /* ── Header ── */
-  header {
-    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 60%);
-    border-bottom: 1px solid var(--border);
-    padding: 40px 24px 32px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    top: -80px; left: 50%;
-    transform: translateX(-50%);
-    width: 500px; height: 300px;
-    background: radial-gradient(ellipse, rgba(108,139,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  header h1 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.5px;
-  }
-  header p {
-    color: var(--muted);
-    margin-top: 8px;
-    font-size: 0.95rem;
-  }
-  .badge-row {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
-  }
-  .badge {
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-  }
-  .badge-math { background: var(--tag-math); color: var(--tag-math-text); }
-  .badge-py   { background: var(--tag-py);   color: var(--tag-py-text);   }
-  .badge-vr   { background: var(--tag-vr);   color: var(--tag-vr-text);   }
+/* HEADER BANNER */
+.page-banner{background:linear-gradient(135deg,#1a1d27,#0f1117);border-bottom:1px solid var(--border);padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+.page-banner::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(108,139,255,0.1) 0%,transparent 70%);pointer-events:none;}
+.page-banner h1{font-size:1.7rem;font-weight:700;color:#fff;}
+.page-banner p{color:var(--muted);margin-top:6px;font-size:0.9rem;}
+.badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px;}
+.badge{padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;}
+.b-math{background:var(--math-bg);color:var(--math-fg);}
+.b-py{background:var(--py-bg);color:var(--py-fg);}
+.b-vr{background:var(--vr-bg);color:var(--vr-fg);}
+.b-job{background:var(--job-bg);color:var(--job-fg);}
 
-  /* ── Search & Filter ── */
-  .controls {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(15,17,23,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 24px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .search-box {
-    flex: 1; min-width: 200px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 9px 14px;
-    color: var(--text);
-    font-size: 0.9rem;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-box:focus { border-color: var(--accent); }
-  .filter-btn {
-    padding: 9px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
-  .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(108,139,255,0.1); }
-  .filter-btn.active-math { border-color: var(--tag-math-text); color: var(--tag-math-text); background: var(--tag-math); }
-  .filter-btn.active-py   { border-color: var(--tag-py-text);   color: var(--tag-py-text);   background: var(--tag-py);   }
-  .filter-btn.active-vr   { border-color: var(--tag-vr-text);   color: var(--tag-vr-text);   background: var(--tag-vr);   }
-  #count-display { color: var(--muted); font-size: 0.82rem; margin-left: auto; }
+/* SECTION LABEL */
+.sec-label{display:flex;align-items:center;gap:12px;padding:28px 24px 10px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  /* ── Section headings ── */
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 28px 24px 12px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-  }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+/* CARDS */
+.cards{padding:0 20px 8px;display:flex;flex-direction:column;gap:10px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.card:hover{border-color:#3d4470;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.card-hdr{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;cursor:pointer;user-select:none;}
+.qnum{min-width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;}
+.qnum-math{background:var(--math-bg);color:var(--math-fg);}
+.qnum-py{background:var(--py-bg);color:var(--py-fg);}
+.qnum-vr{background:var(--vr-bg);color:var(--vr-fg);}
+.qnum-job{background:var(--job-bg);color:var(--job-fg);}
+.qnum-code{background:#1e1e2e;color:#cba6f7;}
+.q-text{flex:1;font-size:0.93rem;font-weight:500;color:#cbd5e1;padding-top:8px;}
+.q-sub{display:block;font-size:0.78rem;color:#64748b;margin-top:3px;font-weight:400;}
+.chevron{width:22px;height:22px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0;margin-top:8px;transition:transform .25s;}
+.card.open .chevron{transform:rotate(180deg);}
+.card-body{display:none;padding:0 16px 16px 66px;border-top:1px solid var(--border);}
+.card.open .card-body{display:block;padding-top:14px;}
 
-  /* ── Cards ── */
-  .cards { padding: 0 24px 24px; display: flex; flex-direction: column; gap: 12px; }
+/* ANSWER ELEMENTS */
+.ans-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin-bottom:8px;}
+.ans-text{color:var(--text);line-height:1.8;}
+.ans-text strong{color:var(--accent);font-weight:600;}
+.ans-text em{color:var(--yellow);font-style:normal;}
+.formula{background:var(--code-bg);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:0.84rem;color:var(--code-fg);overflow-x:auto;white-space:pre-wrap;}
+code{background:var(--surface2);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.83rem;color:#fca5a5;}
+.hl{background:rgba(108,139,255,0.07);border:1px solid rgba(108,139,255,0.2);border-radius:8px;padding:10px 14px;margin:8px 0;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+.col-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.87rem;}
+.col-title{font-weight:700;font-size:0.76rem;margin-bottom:4px;}
+.ct-math{color:var(--math-fg);} .ct-py{color:var(--py-fg);} .ct-vr{color:var(--vr-fg);} .ct-job{color:var(--job-fg);}
+.pill{display:inline-block;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);color:var(--green);border-radius:6px;padding:3px 12px;font-weight:700;font-size:0.88rem;margin:6px 0;}
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .card:hover { border-color: #3d4470; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+/* STEPS LIST */
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.steps-list li{display:flex;gap:12px;align-items:flex-start;font-size:0.88rem;line-height:1.6;}
+.step-num{min-width:28px;height:28px;border-radius:6px;background:var(--job-bg);color:var(--job-fg);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;}
+.step-txt{color:var(--text);}
+.step-txt strong{color:var(--yellow);}
 
-  .card-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 16px 18px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .qnum {
-    min-width: 34px; height: 34px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700;
-    flex-shrink: 0;
-  }
-  .qnum-math { background: var(--tag-math); color: var(--tag-math-text); }
-  .qnum-py   { background: var(--tag-py);   color: var(--tag-py-text);   }
-  .qnum-vr   { background: var(--tag-vr);   color: var(--tag-vr-text);   }
+/* CODE BLOCK */
+.code-block{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:10px 0;}
+.code-block-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#0d0f17;border-bottom:1px solid var(--border);}
+.code-lang{font-size:0.75rem;color:#cba6f7;font-family:'JetBrains Mono',monospace;font-weight:600;}
+.copy-btn{padding:4px 12px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:5px;cursor:pointer;font-size:0.75rem;font-family:inherit;transition:all .2s;}
+.copy-btn:hover{border-color:var(--green);color:var(--green);}
+.code-block pre{padding:14px 16px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:0.82rem;line-height:1.65;color:#cdd6f4;}
+.kw{color:#cba6f7;} .fn{color:#89b4fa;} .str{color:#a6e3a1;} .cm{color:#6c7086;font-style:italic;} .num{color:#fab387;} .cls{color:#f9e2af;}
 
-  .q-text {
-    flex: 1;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #cbd5e1;
-    padding-top: 6px;
-  }
-  .expand-icon {
-    width: 24px; height: 24px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted);
-    flex-shrink: 0;
-    margin-top: 6px;
-    transition: transform 0.25s;
-    font-size: 1rem;
-  }
-  .card.open .expand-icon { transform: rotate(180deg); }
+/* DATASET TABLE */
+.ds-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.85rem;}
+.ds-table th{background:var(--surface2);color:var(--accent);padding:8px 12px;text-align:left;border:1px solid var(--border);font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;}
+.ds-table td{padding:8px 12px;border:1px solid var(--border);color:var(--text);vertical-align:top;}
+.ds-table tr:nth-child(even) td{background:rgba(34,38,58,0.4);}
 
-  .card-body {
-    display: none;
-    padding: 0 18px 18px 66px;
-    border-top: 1px solid var(--border);
-  }
-  .card.open .card-body { display: block; padding-top: 16px; }
+.hidden{display:none!important;}
 
-  .answer-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--green);
-    margin-bottom: 8px;
-  }
-  .answer-text {
-    color: var(--text);
-    line-height: 1.75;
-  }
-  .answer-text strong { color: var(--accent); font-weight: 600; }
-  .answer-text em { color: var(--yellow); font-style: normal; }
-
-  .formula-block {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin: 10px 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88rem;
-    color: #a5f3fc;
-    overflow-x: auto;
-    white-space: pre-wrap;
-  }
-  code {
-    background: var(--surface2);
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: #fca5a5;
-  }
-  .highlight-box {
-    background: rgba(108,139,255,0.07);
-    border: 1px solid rgba(108,139,255,0.2);
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin: 8px 0;
-  }
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 8px;
-  }
-  .col-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 0.88rem;
-  }
-  .col-box .col-title {
-    font-weight: 700;
-    font-size: 0.78rem;
-    margin-bottom: 4px;
-  }
-  .col-title-math { color: var(--tag-math-text); }
-  .col-title-py   { color: var(--tag-py-text);   }
-  .col-title-vr   { color: var(--tag-vr-text);   }
-
-  .ans-pill {
-    display: inline-block;
-    background: rgba(52,211,153,0.1);
-    border: 1px solid rgba(52,211,153,0.3);
-    color: var(--green);
-    border-radius: 6px;
-    padding: 3px 12px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin: 6px 0;
-  }
-
-  /* ── Expand All ── */
-  .expand-all-btn {
-    margin-left: 8px;
-    padding: 9px 14px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.82rem;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
-  .expand-all-btn:hover { border-color: var(--green); color: var(--green); }
-
-  .hidden { display: none !important; }
-
-  @media (max-width: 600px) {
-    header h1 { font-size: 1.3rem; }
-    .cards { padding: 0 12px 16px; }
-    .card-body { padding-left: 18px; }
-    .two-col { grid-template-columns: 1fr; }
-    .controls { padding: 10px 12px; }
-    #count-display { display: none; }
-  }
+@media(max-width:600px){
+  .page-banner h1{font-size:1.2rem;}
+  .cards{padding:0 10px 8px;}
+  .card-body{padding-left:16px;}
+  .two-col{grid-template-columns:1fr;}
+  .nav-tab{padding:12px 14px;font-size:0.78rem;}
+  .count-lbl{display:none;}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>📚 AI in Immersive Technology</h1>
-  <p>Level 6 — Complete Exam Q&amp;A Study Guide</p>
-  <div class="badge-row">
-    <span class="badge badge-math">Q1–21 · Mathematics &amp; Statistics</span>
-    <span class="badge badge-py">Q22–35 · Python &amp; AI</span>
-    <span class="badge badge-vr">Q36–46 · AR / VR Technology</span>
-  </div>
-</header>
-
-<div class="controls">
-  <input class="search-box" type="text" id="searchBox" placeholder="🔍  Search questions…" oninput="filterCards()">
-  <button class="filter-btn active" id="btn-all"  onclick="setFilter('all')">All (46)</button>
-  <button class="filter-btn" id="btn-math" onclick="setFilter('math')">📐 Math</button>
-  <button class="filter-btn" id="btn-py"   onclick="setFilter('py')">🐍 Python/AI</button>
-  <button class="filter-btn" id="btn-vr"   onclick="setFilter('vr')">🥽 AR/VR</button>
-  <button class="expand-all-btn" onclick="toggleAll()">Expand All</button>
-  <span id="count-display">46 questions</span>
+<!-- NAV -->
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showPage('written')">📝 Written Q&A (46)</div>
+  <div class="nav-tab" onclick="showPage('jobs')">🛠️ Practical Jobs</div>
+  <div class="nav-tab" onclick="showPage('codes')">💻 Python Codes</div>
+  <div class="nav-tab" onclick="showPage('datasets')">📊 Datasets</div>
 </div>
 
-<!-- ═══════════════════════════════════════════ PART 1 -->
-<div class="section-title" data-cat="math">Part 1 · Mathematics &amp; Statistics</div>
-<div class="cards" id="math-cards">
+<!-- SEARCH BAR -->
+<div class="search-bar">
+  <input class="search-input" id="searchBox" type="text" placeholder="🔍  Search anything…" oninput="filterAll()">
+  <button class="filter-btn active" id="f-all"  onclick="setFilter('all')">All</button>
+  <button class="filter-btn" id="f-math" onclick="setFilter('math')">📐 Math</button>
+  <button class="filter-btn" id="f-py"   onclick="setFilter('py')">🐍 Python/AI</button>
+  <button class="filter-btn" id="f-vr"   onclick="setFilter('vr')">🥽 AR/VR</button>
+  <button class="filter-btn" id="f-job"  onclick="setFilter('job')">🛠️ Jobs</button>
+  <button class="exp-btn" onclick="toggleAll()">Expand All</button>
+  <span class="count-lbl" id="countLbl"></span>
+</div>
 
-  <div class="card" data-cat="math" data-q="1">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q1</div>
-      <div class="q-text">What is the missing frequency when the arithmetic mean of the given data is 28?<br><small style="color:#64748b">Profits: 0-10, 10-20, 20-30, 30-40, 40-50, 50-60 | Freq: 12, 18, 27, ?, 17, 6</small></div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Let missing frequency = <strong>fₓ</strong>
-        <div class="formula-block">∑f  = 12 + 18 + 27 + fₓ + 17 + 6  =  80 + fₓ
+<!-- ████████████████ PAGE: WRITTEN ████████████████ -->
+<div class="page active" id="page-written">
+<div class="page-banner">
+  <h1>📝 Written Test — Complete Q&A</h1>
+  <p>All 46 questions with full solutions</p>
+  <div class="badge-row">
+    <span class="badge b-math">Q1–21 · Mathematics &amp; Statistics</span>
+    <span class="badge b-py">Q22–35 · Python &amp; AI</span>
+    <span class="badge b-vr">Q36–46 · AR / VR</span>
+  </div>
+</div>
+
+<div class="sec-label" data-cat="math">Part 1 · Mathematics &amp; Statistics</div>
+<div class="cards">
+
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q1</div><div class="q-text">What is the missing frequency when the arithmetic mean is 28?<span class="q-sub">Profits: 0-10,10-20,20-30,30-40,40-50,50-60 | Freq: 12,18,27,?,17,6</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Let missing frequency = <strong>fₓ</strong>
+<div class="formula">∑f  = 12+18+27+fₓ+17+6 = 80+fₓ
 ∑fx = (5×12)+(15×18)+(25×27)+(35×fₓ)+(45×17)+(55×6)
-    = 60 + 270 + 675 + 35fₓ + 765 + 330
-    = 2100 + 35fₓ
+    = 60+270+675+35fₓ+765+330 = 2100+35fₓ
 
-Mean = ∑fx / ∑f
-   28 = (2100 + 35fₓ) / (80 + fₓ)
+Mean = ∑fx/∑f
+  28 = (2100+35fₓ)/(80+fₓ)
 2240 + 28fₓ = 2100 + 35fₓ
-   7fₓ = 140
-   fₓ = 20</div>
-        <div class="ans-pill">Answer: fₓ = 20</div>
-      </div>
-    </div>
-  </div>
+       7fₓ  = 140  →  fₓ = 20</div><div class="pill">Answer: fₓ = 20</div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="2">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q2</div>
-      <div class="q-text">Find the arithmetic mean of fruit boxes.<br><small style="color:#64748b">Weight: 10, 11, 12, 14, 15 kg | Boxes: 4, 6, 6, 5, 2</small></div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">∑fx = (10×4)+(11×6)+(12×6)+(14×5)+(15×2)
-     = 40 + 66 + 72 + 70 + 30  =  278
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q2</div><div class="q-text">Find arithmetic mean of fruit boxes.<span class="q-sub">Weight(kg): 10,11,12,14,15 | Boxes: 4,6,6,5,2</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">∑fx = (10×4)+(11×6)+(12×6)+(14×5)+(15×2) = 40+66+72+70+30 = 278
 ∑f  = 4+6+6+5+2 = 23
+Mean = 278/23</div><div class="pill">Answer: 12.09 kg</div></div></div></div>
 
-Mean = 278 / 23</div>
-        <div class="ans-pill">Answer: 12.09 kg</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q3</div><div class="q-text">Calculate arithmetic mean for Marks.<span class="q-sub">Marks: 0-10,10-30,30-60,60-100 | Students: 5,12,25,8</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Midpoints: 5, 20, 45, 80
+∑fx = (5×5)+(20×12)+(45×25)+(80×8) = 25+240+1125+640 = 2030
+∑f  = 50
+Mean = 2030/50</div><div class="pill">Answer: 40.6</div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="3">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q3</div>
-      <div class="q-text">Calculate the arithmetic mean for Marks.<br><small style="color:#64748b">Marks: 0-10, 10-30, 30-60, 60-100 | Students: 5, 12, 25, 8</small></div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Midpoints: 5, 20, 45, 80
-∑fx = (5×5)+(20×12)+(45×25)+(80×8)
-    = 25 + 240 + 1125 + 640  =  2030
-∑f  = 5+12+25+8 = 50
-
-Mean = 2030 / 50</div>
-        <div class="ans-pill">Answer: 40.6</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="math" data-q="4">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q4</div>
-      <div class="q-text">Find the arithmetic mean for Classes: 1-10, 11-20, 21-30, 31-40, 41-50 | Frequency: 8, 15, 25, 10, 7</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Midpoints: 5.5, 15.5, 25.5, 35.5, 45.5
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q4</div><div class="q-text">Find arithmetic mean for Classes: 1-10,11-20,21-30,31-40,41-50 | Freq: 8,15,25,10,7</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Midpoints: 5.5, 15.5, 25.5, 35.5, 45.5
 ∑fx = (5.5×8)+(15.5×15)+(25.5×25)+(35.5×10)+(45.5×7)
     = 44+232.5+637.5+355+318.5 = 1587.5
+∑f  = 65
+Mean = 1632.5/65</div><div class="pill">Answer: 25.12</div></div></div></div>
 
-Wait — using standard midpoints:
-Midpoints: 5.5, 15.5, 25.5, 35.5, 45.5
-∑f = 8+15+25+10+7 = 65
-∑fx = 1632.5
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q5</div><div class="q-text">What is the variance of the dataset: 5, 5, 5, 5?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">All values identical → Mean = 5. Every deviation = 0.<div class="formula">σ² = Σ(x−μ)²/N = (0+0+0+0)/4 = 0</div><div class="pill">Answer: 0</div></div></div></div>
 
-Mean = 1632.5 / 65</div>
-        <div class="ans-pill">Answer: 25.12</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q6</div><div class="q-text">Find Mean, Median, Mode of: 25, 37, 31, 32, 32, 29, 30, 32, 29, 34</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Sorted: 25, 29, 29, 30, 31, 32, 32, 32, 34, 37
 
-  <div class="card" data-cat="math" data-q="5">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q5</div>
-      <div class="q-text">What is the variance of the dataset: 5, 5, 5, 5?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        All values are identical → Mean = 5. Every deviation from the mean = 0.
-        <div class="formula-block">Variance (σ²) = Σ(x − μ)² / N = (0+0+0+0) / 4 = 0</div>
-        <div class="ans-pill">Answer: 0</div>
-      </div>
-    </div>
-  </div>
+Mean   = 311/10 = 31.1
+Median = avg of 5th & 6th = (31+32)/2 = 31.5
+Mode   = 32  (appears 3 times)</div><div class="hl"><strong>Mean = 31.1 | Median = 31.5 | Mode = 32</strong></div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="6">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q6</div>
-      <div class="q-text">Find Mean, Median, and Mode of: 25, 37, 31, 32, 32, 29, 30, 32, 29, 34</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Sorted: 25, 29, 29, 30, 31, 32, 32, 32, 34, 37
-
-Mean   = (25+29+29+30+31+32+32+32+34+37) / 10
-       = 311 / 10 = 31.1
-
-Median = Average of 5th & 6th values
-       = (31 + 32) / 2 = 31.5
-
-Mode   = Most frequent value = 32 (appears 3 times)</div>
-        <div class="highlight-box">
-          <strong>Mean = 31.1</strong> | <strong>Median = 31.5</strong> | <strong>Mode = 32</strong>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="math" data-q="7">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q7</div>
-      <div class="q-text">The mean of 5 numbers is 12.7. What extra number must be added to bring the mean to 13.1?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Original total = 12.7 × 5 = 63.5
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q7</div><div class="q-text">Mean of 5 numbers is 12.7. What extra number brings the mean to 13.1?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Original total = 12.7 × 5 = 63.5
 New total needed = 13.1 × 6 = 78.6
+Extra number = 78.6 − 63.5</div><div class="pill">Answer: 15.1</div></div></div></div>
 
-Extra number = 78.6 − 63.5</div>
-        <div class="ans-pill">Answer: 15.1</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q8</div><div class="q-text">After 5 matches mean goals = 1.8. Team scores 3 goals in 6th match. New mean?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Total after 5 matches = 1.8 × 5 = 9
+Total after 6th match = 9 + 3 = 12
+New Mean = 12 / 6</div><div class="pill">Answer: 2.0</div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="8">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q8</div>
-      <div class="q-text">After 5 matches, goals mean is 1.8. Team scores 3 goals in 6th match. New mean?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Total goals after 5 matches = 1.8 × 5 = 9
-Goals after 6th match = 9 + 3 = 12
-New Mean = 12 / 6</div>
-        <div class="ans-pill">Answer: 2.0</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="math" data-q="9">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q9</div>
-      <div class="q-text">Corrected Mean for 50 items. Mean = 100. Items 180 & 90 were wrongly taken as 100 & 10.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Original Sum = 100 × 50 = 5000
-Wrong values  = 100 + 10 = 110
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q9</div><div class="q-text">Corrected Mean for 50 items (Mean=100). Items 180 & 90 wrongly taken as 100 & 10.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Original Sum = 100 × 50 = 5000
+Wrong values   = 100 + 10 = 110
 Correct values = 180 + 90 = 270
+Corrected Sum  = 5000 − 110 + 270 = 5160
+Corrected Mean = 5160 / 50</div><div class="pill">Corrected Mean = 103.2</div></div></div></div>
 
-Corrected Sum = 5000 − 110 + 270 = 5160
-Corrected Mean = 5160 / 50</div>
-        <div class="ans-pill">Corrected Mean = 103.2</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q10</div><div class="q-text">What is the SD of a Bernoulli variable with p = 0.5?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">σ = √[p(1−p)] = √[0.5 × 0.5] = √0.25</div><div class="pill">Answer: σ = 0.5</div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="10">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q10</div>
-      <div class="q-text">What is the Standard Deviation of a Bernoulli variable with p = 0.5?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">σ = √[p(1−p)] = √[0.5 × 0.5] = √0.25</div>
-        <div class="ans-pill">Answer: σ = 0.5</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q11</div><div class="q-text">Find the gradient of f(x,y) = 3x² + 2xy + y²</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">∂f/∂x = 6x + 2y
+∂f/∂y = 2x + 2y
 
-  <div class="card" data-cat="math" data-q="11">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q11</div>
-      <div class="q-text">Find the gradient of f(x, y) = 3x² + 2xy + y²</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Gradient = vector of partial derivatives:
-        <div class="formula-block">∂f/∂x = 6x + 2y      (differentiate w.r.t. x, treat y as constant)
-∂f/∂y = 2x + 2y      (differentiate w.r.t. y, treat x as constant)
+∇f(x,y) = (6x + 2y)î + (2x + 2y)ĵ</div></div></div></div>
 
-∇f(x,y) = (6x + 2y) î + (2x + 2y) ĵ</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q12</div><div class="q-text">Explain Chebyshev's Inequality.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">For <strong>any distribution</strong>, at least <strong>(1 − 1/k²)</strong> of values fall within k standard deviations of the mean.<div class="formula">P(|X − μ| ≥ kσ) ≤ 1/k²
 
-  <div class="card" data-cat="math" data-q="12">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q12</div>
-      <div class="q-text">Explain Chebyshev's Inequality.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        For <strong>any</strong> distribution (no shape assumption needed), Chebyshev's Inequality states:
-        <div class="formula-block">P(|X − μ| ≥ kσ)  ≤  1/k²
+Example: k=2 → at least 75% of data within 2σ of mean
+         k=3 → at least 89% of data within 3σ of mean</div>Works regardless of distribution shape — a <em>universal lower bound</em>.</div></div></div>
 
-Equivalently:
-At least (1 − 1/k²) of data lies within k standard deviations of the mean.
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q13</div><div class="q-text">Explain the concept of Kurtosis.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Kurtosis measures the <strong>"tailedness"</strong> of a distribution.<div class="two-col"><div class="col-box"><div class="col-title ct-math">Leptokurtic (High &gt;3)</div>Heavy tails, sharp peak, more outliers.</div><div class="col-box"><div class="col-title ct-math">Platykurtic (Low &lt;3)</div>Light tails, flat peak, fewer outliers.</div></div>Normal distribution = Mesokurtic, Kurtosis = <strong>3</strong>.</div></div></div>
 
-Example: k=2 → at least 1 − 1/4 = 75% of values lie within 2σ of mean.</div>
-        It is a <em>universal lower bound</em> — works regardless of data shape.
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q14</div><div class="q-text">How do you interpret a p-value in hypothesis testing?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">The p-value is the <strong>probability of observing results at least as extreme</strong> as current data, assuming H₀ is true.<div class="two-col"><div class="col-box"><div class="col-title ct-math">p &lt; 0.05</div>Strong evidence against H₀ → <strong>Reject H₀</strong></div><div class="col-box"><div class="col-title ct-math">p ≥ 0.05</div>Insufficient evidence → <strong>Fail to reject H₀</strong></div></div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="13">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q13</div>
-      <div class="q-text">Explain the concept of Kurtosis.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Kurtosis measures the <strong>"tailedness"</strong> (heaviness of tails) of a distribution.
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-math">Leptokurtic (High)</div>Heavy tails, sharp peak, more outliers. Kurtosis &gt; 3.</div>
-          <div class="col-box"><div class="col-title col-title-math">Platykurtic (Low)</div>Light tails, flat peak, fewer outliers. Kurtosis &lt; 3.</div>
-        </div>
-        Normal distribution has kurtosis = <strong>3</strong> (Mesokurtic).
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q15</div><div class="q-text">Define Standard Error vs Standard Deviation.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-math">Standard Deviation (SD)</div>Spread of <em>individual data points</em> around the mean.</div><div class="col-box"><div class="col-title ct-math">Standard Error (SE)</div>Precision of the <em>sample mean</em>. SE = SD / √n</div></div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="14">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q14</div>
-      <div class="q-text">How do you interpret a p-value in hypothesis testing?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        The p-value is the <strong>probability of observing results at least as extreme</strong> as the current data, <em>assuming the null hypothesis (H₀) is true</em>.
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-math">p &lt; 0.05</div>Strong evidence against H₀ → <strong>Reject H₀</strong> (statistically significant)</div>
-          <div class="col-box"><div class="col-title col-title-math">p ≥ 0.05</div>Insufficient evidence → <strong>Fail to reject H₀</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q16</div><div class="q-text">In a positively skewed distribution, which measure is largest?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Mode  &lt;  Median  &lt;  Mean  (right-skewed)</div><div class="pill">Largest = Mean</div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="15">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q15</div>
-      <div class="q-text">Define Standard Error vs Standard Deviation.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-math">Standard Deviation (SD)</div>Measures spread of <em>individual data points</em> around the mean. Describes variability in the dataset.</div>
-          <div class="col-box"><div class="col-title col-title-math">Standard Error (SE)</div>Measures precision of the <em>sample mean</em> as an estimate of population mean.<br>SE = SD / √n</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q17</div><div class="q-text">Which measure is best for categorical data?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="pill">Answer: Mode</div>Mode is the only measure applicable to nominal/categorical data. Mean and Median require numeric data.</div></div></div>
 
-  <div class="card" data-cat="math" data-q="16">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q16</div>
-      <div class="q-text">In a positively skewed distribution, which measure of central tendency is the largest?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        In a <strong>right-skewed (positively skewed)</strong> distribution, the tail extends to the right. The order is:
-        <div class="formula-block">Mode  &lt;  Median  &lt;  Mean</div>
-        <div class="ans-pill">Largest = Mean</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q18</div><div class="q-text">Why is Standard Deviation better than Range?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-math">Range</div>Only uses max & min. Ignores all other data. Sensitive to outliers.</div><div class="col-box"><div class="col-title ct-math">Standard Deviation</div>Accounts for every data point. More representative of overall variability.</div></div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="17">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q17</div>
-      <div class="q-text">Which measure is best for categorical data?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="ans-pill">Answer: Mode</div>
-        Mode is the only measure of central tendency applicable to <strong>nominal/categorical data</strong> (e.g., most common color, most frequent city). Mean and Median require numeric data with meaningful order.
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q19</div><div class="q-text">When is Median more robust than Mean?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">When dataset contains <strong>outliers or extreme values</strong>. Mean is pulled toward extremes; Median (middle value) stays unaffected.<div class="hl"><strong>Example:</strong> Income data — a few billionaires skew the mean, making median a better representative.</div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="18">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q18</div>
-      <div class="q-text">Why is Standard Deviation better than Range?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-math">Range</div>Only uses max and min values. Ignores all other data points. Sensitive to outliers.</div>
-          <div class="col-box"><div class="col-title col-title-math">Standard Deviation</div>Accounts for every data point's distance from the mean. More representative of overall variability.</div>
-        </div>
-        SD gives a more <em>accurate and complete</em> picture of dispersion in the dataset.
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q20</div><div class="q-text">What does the variance of a dataset measure?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Variance measures the <strong>average squared deviation</strong> of each data point from the mean.<div class="formula">σ² = Σ(x − μ)² / N</div>Higher variance = data more spread out. Lower variance = data clustered near mean.</div></div></div>
 
-  <div class="card" data-cat="math" data-q="19">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q19</div>
-      <div class="q-text">When is Median more robust than Mean?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Median is preferred when the dataset contains <strong>outliers or extreme values</strong>. The mean is pulled toward extremes, while the median (middle value) remains unaffected.
-        <div class="highlight-box">
-          <strong>Example:</strong> Income data — if a few billionaires are in the dataset, the mean salary becomes misleadingly high. The median salary better represents the typical person.
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="math"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">Q21</div><div class="q-text">Standard deviation is the square root of which measure?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="pill">Answer: Variance</div><div class="formula">σ = √(σ²)    →    Standard Deviation = √Variance</div></div></div></div>
 
-  <div class="card" data-cat="math" data-q="20">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q20</div>
-      <div class="q-text">What does the variance of a dataset measure?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Variance measures the <strong>average squared deviation</strong> of each data point from the mean. It quantifies how spread out the data is.
-        <div class="formula-block">σ² = Σ(x − μ)² / N
+</div><!-- /cards math -->
 
-Higher variance → data more spread out
-Lower variance  → data clustered near the mean</div>
-      </div>
-    </div>
-  </div>
+<div class="sec-label" data-cat="py">Part 2 · Python &amp; AI Concepts</div>
+<div class="cards">
 
-  <div class="card" data-cat="math" data-q="21">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-math">Q21</div>
-      <div class="q-text">Standard deviation is the square root of which statistical measure?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="ans-pill">Answer: Variance</div>
-        <div class="formula-block">σ = √(σ²)      →      Standard Deviation = √Variance</div>
-      </div>
-    </div>
-  </div>
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q22</div><div class="q-text">How to ensure a variable is treated as a float?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">x = float(5)   # Explicit type casting → 5.0
+x = 5.0        # Decimal notation → 5.0</div></div></div></div>
 
-</div>
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q23</div><div class="q-text">How to check if a string starts with a specific prefix?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Use the built-in <code>startswith()</code> method:<div class="formula">text = "Hello World"
+result = text.startswith("Hello")   # True
+result = text.startswith("World")   # False</div></div></div></div>
 
-<!-- ═══════════════════════════════════════════ PART 2 -->
-<div class="section-title" data-cat="py">Part 2 · Python &amp; AI Concepts</div>
-<div class="cards" id="py-cards">
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q24</div><div class="q-text">How to print multiple variables with a custom separator?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Use the <code>sep</code> parameter in <code>print()</code>:<div class="formula">print(a, b, c, sep="-")    # Output: a-b-c
+print(a, b, c, sep=" | ") # Output: a | b | c</div></div></div></div>
 
-  <div class="card" data-cat="py" data-q="22">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q22</div>
-      <div class="q-text">How do you ensure a variable is treated as a float even if initialized with an integer?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Two approaches:
-        <div class="formula-block">x = float(5)    # Explicit type casting
-x = 5.0         # Decimal notation (implicit float)</div>
-        Both store <code>5.0</code> (a float). Using <code>float()</code> is the safe approach when converting from an integer variable.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="23">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q23</div>
-      <div class="q-text">How do you check if a string starts with a specific prefix?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Use the built-in <code>startswith()</code> method:
-        <div class="formula-block">text = "Hello World"
-result = text.startswith("Hello")   # returns True
-result = text.startswith("World")   # returns False</div>
-        Returns <code>True</code> or <code>False</code>.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="24">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q24</div>
-      <div class="q-text">How do you print multiple variables with a custom separator?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Use the <code>sep</code> parameter in <code>print()</code>:
-        <div class="formula-block">a, b, c = 10, 20, 30
-print(a, b, c, sep="-")    # Output: 10-20-30
-print(a, b, c, sep=" | ") # Output: 10 | 20 | 30</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="25">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q25</div>
-      <div class="q-text">How do you skip the current iteration but continue the loop?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Use the <code>continue</code> keyword:
-        <div class="formula-block">for i in range(10):
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q25</div><div class="q-text">How to skip the current iteration but continue the loop?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Use the <code>continue</code> keyword:<div class="formula">for i in range(10):
     if i == 5:
-        continue      # Skips i=5, loop goes to i=6
+        continue     # skips i=5
     print(i)
-# Output: 0 1 2 3 4 6 7 8 9</div>
-        <code>continue</code> skips the <em>rest of the current iteration</em> and moves to the next one.
-      </div>
-    </div>
+# Output: 0 1 2 3 4 6 7 8 9</div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q26</div><div class="q-text">Define "Completeness" in a search algorithm.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Completeness guarantees: if a solution exists, the algorithm will <strong>eventually find it</strong>.<div class="two-col"><div class="col-box"><div class="col-title ct-py">BFS ✅ Complete</div>Explores all nodes level by level.</div><div class="col-box"><div class="col-title ct-py">DFS ❌ Not Always</div>Can get stuck in infinite loops.</div></div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q27</div><div class="q-text">Explain the difference between Normalization and Standardization.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-py">Normalization</div>Scale to [0,1].<br>x' = (x−min)/(max−min)<br>Use when: no distribution assumption.</div><div class="col-box"><div class="col-title ct-py">Standardization</div>Mean=0, SD=1.<br>x' = (x−μ)/σ<br>Use when: normally distributed data.</div></div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q28</div><div class="q-text">Explain the Ordinary Least Squares (OLS) method.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">OLS is a linear regression technique that estimates coefficients by <strong>minimizing the sum of squared residuals</strong>.<div class="formula">Minimize: Σ(yᵢ − ŷᵢ)² = Σ(yᵢ − (β₀ + β₁xᵢ))²
+→ Finds the best-fit line through the data.</div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q29</div><div class="q-text">Feature Selection vs Feature Extraction.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-py">Feature Selection</div>Chooses a <em>subset</em> of existing features. No transformation. E.g., removing irrelevant columns.</div><div class="col-box"><div class="col-title ct-py">Feature Extraction</div>Creates <em>new features</em> by transforming data. E.g., PCA creates new components.</div></div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q30</div><div class="q-text">What is a Chatbot in NLP?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">An AI program that simulates human conversation via text/voice using NLP.<div class="two-col"><div class="col-box"><div class="col-title ct-py">Rule-Based</div>Pre-defined rules & decision trees. Limited flexibility.</div><div class="col-box"><div class="col-title ct-py">ML-Based</div>Learns from data. Understands context. Examples: ChatGPT, Alexa.</div></div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q31</div><div class="q-text">How does Heuristic Search improve upon traditional search?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Uses a <strong>heuristic function h(n)</strong> to estimate cost to goal — guides search toward goal more efficiently.<div class="two-col"><div class="col-box"><div class="col-title ct-py">Uninformed (BFS)</div>Explores blindly. Slow, uses more memory.</div><div class="col-box"><div class="col-title ct-py">Heuristic (A*)</div>Uses h(n) to prioritize. Faster, less memory.</div></div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q32</div><div class="q-text">MLP vs Single-Layer Perceptron.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-py">Single-Layer Perceptron</div>Input + Output only. Solves only <em>linearly separable</em> problems (AND, OR). Cannot solve XOR.</div><div class="col-box"><div class="col-title ct-py">MLP (Multi-Layer)</div>Hidden layers with non-linear activations. Solves <em>non-linear</em> problems (XOR, image recognition).</div></div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q33</div><div class="q-text">How does Term Frequency (TF) contribute to feature importance?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">TF measures how often a word appears in a document. Higher TF = more relevant to that document.<div class="formula">TF(t,d) = (count of term t in d) / (total terms in d)
+Combined with IDF → TF-IDF score (used in search engines)</div></div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q34</div><div class="q-text">Fundamental architecture of an Artificial Neural Network.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">Input Layer → Hidden Layer(s) → Output Layer
+     ↓               ↓                  ↓
+Raw features   Weighted sums       Prediction /
+               + activations      Classification</div><strong>Input Layer:</strong> receives raw features. <strong>Hidden Layers:</strong> learn representations. <strong>Output Layer:</strong> final prediction.</div></div></div>
+
+<div class="card" data-cat="py"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">Q35</div><div class="q-text">What is the Feed-Forward Network (FFN) in a Transformer?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Applied independently to each token after attention. Two linear transforms with non-linear activation:<div class="formula">FFN(x) = max(0, x·W₁ + b₁) · W₂ + b₂
+Step1: Linear expand → Step2: ReLU/GELU → Step3: Linear compress</div></div></div></div>
+
+</div><!-- /cards py -->
+
+<div class="sec-label" data-cat="vr">Part 3 · AR / VR Immersive Technology</div>
+<div class="cards">
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q36</div><div class="q-text">Programming language for Unity development?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="pill">Answer: C# (C-Sharp)</div>Unity's primary scripting language. Provides full access to engine APIs, physics, UI, MonoBehaviour lifecycle.</div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q37</div><div class="q-text">Differentiate inside-out and outside-in tracking.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-vr">Inside-Out</div>Sensors ON the headset track the environment. No external setup. Portable. E.g., Meta Quest.</div><div class="col-box"><div class="col-title ct-vr">Outside-In</div>External base stations track the headset. More precise. Requires room setup. E.g., Valve Index.</div></div></div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q38</div><div class="q-text">Navigation vs Manipulation interfaces.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-vr">Navigation</div>Controls user's <em>movement</em> through virtual space. E.g., teleportation, joystick.</div><div class="col-box"><div class="col-title ct-vr">Manipulation</div>Interact with <em>virtual objects</em> — grab, move, rotate, scale.</div></div></div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q39</div><div class="q-text">What is cybersickness and what causes it?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Nausea/disorientation in VR from <strong>sensory conflict</strong> — eyes see motion, inner ear detects no movement.<div class="hl">Worsened by: high latency, low frame rate, large FOV motion, artificial locomotion.</div></div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q40</div><div class="q-text">Mobile vs High-end VR platforms.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-vr">Mobile VR</div>Smartphone-based. Low cost, portable, limited graphics. E.g., Google Cardboard, Gear VR.</div><div class="col-box"><div class="col-title ct-vr">High-End VR</div>PC-tethered. High fidelity, better tracking, more immersive. E.g., Valve Index, Meta Quest Pro.</div></div></div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q41</div><div class="q-text">Explain the mobile AR platform briefly.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Uses smartphone camera, gyroscope, and accelerometer to overlay digital content on real world.<div class="formula">Key Tech: SLAM (Simultaneous Localization and Mapping)
+Platforms: ARKit (Apple/iOS), ARCore (Google/Android)</div>Used in: navigation, retail try-on, gaming (Pokémon Go).</div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q42</div><div class="q-text">What is inertial full-body tracking?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Uses <strong>IMU sensors</strong> (Accelerometer + Gyroscope) on multiple body segments to capture movement.<div class="hl"><strong>Advantage:</strong> No cameras needed — fully portable.<br><strong>Limitation:</strong> Prone to drift over time.</div>Used in: motion capture, VR full-body avatars.</div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q43</div><div class="q-text">Role of a graphics accelerator (GPU).</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">GPU handles parallel computations for 3D rendering: vertex transforms, shaders, textures, rasterization.<div class="hl">In VR: must render <strong>two eye views</strong> at minimum <strong>90 FPS</strong>. Low FPS = lag = cybersickness.</div></div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q44</div><div class="q-text">Co-located vs Distributed virtual environments.</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="two-col"><div class="col-box"><div class="col-title ct-vr">Co-located</div>Users in <em>same physical space</em>. E.g., VR lab collaboration.</div><div class="col-box"><div class="col-title ct-vr">Distributed</div>Users in <em>different locations</em> connected via network. E.g., online VR meetings.</div></div></div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q45</div><div class="q-text">How do you configure Windows Mixed Reality (WMR)?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text"><div class="formula">1. Connect headset via USB 3.0 and HDMI/DisplayPort
+2. Open "Mixed Reality Portal" app (Windows 10/11)
+3. Follow setup wizard → define boundary
+4. Pair and calibrate motion controllers
+5. Verify performance & display settings</div></div></div></div>
+
+<div class="card" data-cat="vr"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">Q46</div><div class="q-text">What is Singular Value Decomposition (SVD)?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Answer</div><div class="ans-text">Matrix factorization that decomposes any matrix A into three matrices:<div class="formula">A = U · Σ · Vᵀ
+  U  = Left singular vectors (orthogonal)
+  Σ  = Diagonal matrix of singular values (sorted descending)
+  Vᵀ = Right singular vectors (orthogonal)</div><div class="two-col"><div class="col-box"><div class="col-title ct-vr">Applications</div>• Dimensionality reduction (PCA)<br>• Noise filtering<br>• Recommender systems<br>• Image compression</div><div class="col-box"><div class="col-title ct-vr">Key Point</div>Works on ANY matrix (not just square). Singular values = "importance" of each dimension.</div></div></div></div></div>
+
+</div><!-- /cards vr -->
+</div><!-- /page written -->
+
+
+<!-- ████████████████ PAGE: JOBS ████████████████ -->
+<div class="page" id="page-jobs">
+<div class="page-banner">
+  <h1>🛠️ Practical Demonstration Jobs</h1>
+  <p>All working procedure steps with explanations for every job</p>
+  <div class="badge-row">
+    <span class="badge b-job">Set-01 · 3 Jobs</span>
+    <span class="badge b-job">Additional · 5 Jobs</span>
   </div>
-
-  <div class="card" data-cat="py" data-q="26">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q26</div>
-      <div class="q-text">Define "Completeness" in a search algorithm.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <strong>Completeness</strong> guarantees that if a solution exists in the search space, the algorithm will <em>eventually find it</em>.
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-py">BFS (Breadth-First)</div>✅ Complete — explores all nodes level by level</div>
-          <div class="col-box"><div class="col-title col-title-py">DFS (Depth-First)</div>❌ Not always complete — can get stuck in infinite loops</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="27">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q27</div>
-      <div class="q-text">Explain the difference between Normalization and Standardization.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-py">Normalization</div>Scales data to range [0, 1].<br><br>x' = (x − min) / (max − min)<br><br>Use when: no assumption about distribution.</div>
-          <div class="col-box"><div class="col-title col-title-py">Standardization</div>Centers data: mean=0, SD=1.<br><br>x' = (x − μ) / σ<br><br>Use when: data is normally distributed.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="28">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q28</div>
-      <div class="q-text">Explain the Ordinary Least Squares (OLS) method.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        OLS is a <strong>linear regression technique</strong> that estimates model coefficients by <em>minimizing the sum of squared residuals</em> (vertical distances between observed and predicted values).
-        <div class="formula-block">Minimize: Σ(yᵢ − ŷᵢ)²  =  Σ(yᵢ − (β₀ + β₁xᵢ))²
-
-Where:
-  yᵢ = actual value
-  ŷᵢ = predicted value
-  β₀ = intercept, β₁ = slope</div>
-        OLS finds the <strong>best-fit line</strong> through the data.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="29">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q29</div>
-      <div class="q-text">What is the difference between Feature Selection and Feature Extraction?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-py">Feature Selection</div>Chooses a <em>subset of existing features</em> without transforming them.<br>Example: removing irrelevant columns.</div>
-          <div class="col-box"><div class="col-title col-title-py">Feature Extraction</div>Creates <em>new features</em> by transforming original data.<br>Example: PCA reduces dimensions by creating new components.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="30">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q30</div>
-      <div class="q-text">What is a Chatbot in the context of NLP?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        A <strong>Chatbot</strong> is an AI program that simulates human conversation through text or voice using <strong>Natural Language Processing (NLP)</strong>.
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-py">Rule-Based</div>Follows pre-defined rules and decision trees. Limited flexibility.</div>
-          <div class="col-box"><div class="col-title col-title-py">ML-Based</div>Powered by machine learning / deep learning. Understands context and learns from data.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="31">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q31</div>
-      <div class="q-text">How does Heuristic Search improve upon traditional search algorithms?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Heuristic search uses a <strong>heuristic function h(n)</strong> — domain-specific knowledge — to estimate the cost from the current state to the goal. This guides the search toward the goal more <em>efficiently</em>.
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-py">Uninformed (BFS/DFS)</div>Explores blindly — no knowledge of goal direction. Slow, uses more memory.</div>
-          <div class="col-box"><div class="col-title col-title-py">Heuristic (A*)</div>Uses h(n) to prioritize promising paths. Faster, less memory usage.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="32">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q32</div>
-      <div class="q-text">How does a Multi-Layer Perceptron (MLP) differ from a Single-Layer Perceptron?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-py">Single-Layer Perceptron</div>Only input + output layers. Can solve only <em>linearly separable</em> problems (AND, OR gates). Cannot handle XOR.</div>
-          <div class="col-box"><div class="col-title col-title-py">MLP (Multi-Layer)</div>Has one or more hidden layers with non-linear activation functions. Can solve <em>non-linear</em> problems (XOR, image recognition).</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="33">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q33</div>
-      <div class="q-text">How does Term Frequency (TF) contribute to feature importance?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        TF measures <strong>how often a word appears in a specific document</strong>. A higher TF suggests the term is more relevant to that document's topic.
-        <div class="formula-block">TF(t, d) = (Number of times term t appears in d) / (Total terms in d)
-
-Combined with IDF → TF-IDF score (used in search engines, NLP)</div>
-        TF alone doesn't distinguish common words (like "the"), which is why IDF (penalizing common words) is combined with it.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="34">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q34</div>
-      <div class="q-text">What is the fundamental architecture of an Artificial Neural Network?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Input Layer  →  Hidden Layer(s)  →  Output Layer
-    ↓                  ↓                    ↓
-Raw features    Weighted sums          Prediction /
-                + activations         Classification</div>
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-py">Input Layer</div>Receives raw input features (one neuron per feature).</div>
-          <div class="col-box"><div class="col-title col-title-py">Hidden Layer(s)</div>Learn intermediate representations via weights and activation functions.</div>
-        </div>
-        <div style="margin-top:8px" class="col-box"><div class="col-title col-title-py">Output Layer</div>Produces final prediction. Neurons = number of classes (classification) or 1 (regression).</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="py" data-q="35">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-py">Q35</div>
-      <div class="q-text">What is the Feed-Forward Network (FFN) within a Transformer block?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        In a Transformer, the FFN is applied <strong>independently to each token</strong> after the attention mechanism. It consists of two linear transformations with a non-linear activation in between:
-        <div class="formula-block">FFN(x) = max(0, x·W₁ + b₁) · W₂ + b₂
-
-Step 1: Linear transform (expand dimensions)
-Step 2: ReLU / GELU activation (non-linearity)
-Step 3: Linear transform (reduce back to model dimension)</div>
-        It helps the model transform token representations before the next attention stage.
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<!-- ═══════════════════════════════════════════ PART 3 -->
-<div class="section-title" data-cat="vr">Part 3 · Immersive Technology (AR / VR)</div>
-<div class="cards" id="vr-cards">
+<div class="sec-label" data-cat="job">Set-01 — Assigned Examination Jobs</div>
+<div class="cards">
 
-  <div class="card" data-cat="vr" data-q="36">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q36</div>
-      <div class="q-text">Which programming language is commonly used for Unity development?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="ans-pill">Answer: C# (C-Sharp)</div>
-        Unity uses <strong>C#</strong> as its primary scripting language. UnityScript (JavaScript-like) was deprecated. C# provides full access to Unity's engine APIs, MonoBehaviour lifecycle, physics, UI, and more.
-      </div>
-    </div>
+<!-- JOB 01 -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J01</div><div class="q-text">Job 01 — Population Data Analysis<span class="q-sub">Python · Statistics · Data Visualization | 40 Minutes</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Working Procedure (18 Steps)</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Wear required <strong>PPE</strong> (Personal Protective Equipment) — rubber-sole shoes.</div></li>
+<li><div class="step-num">2</div><div class="step-txt">Observe and follow <strong>OHS</strong> (Occupational Health & Safety) requirements.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Check <strong>electricity, peripheral devices & internet</strong> connections to your computer.</div></li>
+<li><div class="step-num">4</div><div class="step-txt"><strong>Start the computer</strong> and ensure it powers on correctly.</div></li>
+<li><div class="step-num">5</div><div class="step-txt">Check for <strong>software errors</strong> and troubleshoot any problems.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Collect the <strong>population.csv dataset</strong> from your assessor.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Set up the <strong>Python environment</strong> (pandas, numpy, matplotlib).</div></li>
+<li><div class="step-num">8</div><div class="step-txt"><strong>Load the dataset:</strong> <code>df = pd.read_csv("population.csv")</code></div></li>
+<li><div class="step-num">9</div><div class="step-txt">Perform <strong>initial data inspection</strong>: <code>df.head()</code>, <code>df.info()</code>, <code>df.describe()</code>, <code>df.isnull().sum()</code></div></li>
+<li><div class="step-num">10</div><div class="step-txt">Compute <strong>mean, median, variance, std</strong> of population for each continent using <code>df.groupby("Continent").agg(["mean","median","var","std"])</code></div></li>
+<li><div class="step-num">11</div><div class="step-txt">Calculate <strong>cumulative population growth</strong>: <code>df["Growth"] = df[last_year] - df[first_year]</code> and growth percentage.</div></li>
+<li><div class="step-num">12</div><div class="step-txt">Rename columns using <strong>conditional logic</strong>: "2020 Population" → "2020" using loop with <code>col.replace(" Population", "")</code></div></li>
+<li><div class="step-num">13</div><div class="step-txt">Save cleaned dataset: <code>df.to_csv("processed_data.csv", index=False)</code></div></li>
+<li><div class="step-num">14</div><div class="step-txt">Visualize <strong>continent-wise population histograms</strong> for 1900 and 2022 using <code>plt.hist()</code></div></li>
+<li><div class="step-num">15</div><div class="step-txt">Show <strong>timeline of continent-wise population</strong> using line plot with <code>plt.plot()</code>. Interpret trends and anomalies.</div></li>
+<li><div class="step-num">16</div><div class="step-txt">Compute and visualize <strong>correlation matrix</strong>: <code>df[year_cols].corr()</code> and <code>plt.imshow()</code></div></li>
+<li><div class="step-num">17</div><div class="step-txt"><strong>Submit final output</strong> to the assessor.</div></li>
+<li><div class="step-num">18</div><div class="step-txt"><strong>Shut down computer</strong> and clean workplace.</div></li>
+</ul>
+<div class="hl" style="margin-top:12px"><strong>Key Libraries:</strong> pandas, numpy, matplotlib<br><strong>Output File:</strong> processed_data.csv</div>
+</div></div>
+
+<!-- JOB 02 -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J02</div><div class="q-text">Job 02 — Weather Prediction System<span class="q-sub">Machine Learning · Classification | Sklearn</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Working Procedure (23 Steps)</div>
+<ul class="steps-list">
+<li><div class="step-num">1-5</div><div class="step-txt">PPE, OHS, Check connections, Start computer, Fix software errors.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Collect <strong>weather.csv dataset</strong> from assessor.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Create a <strong>Weather Prediction System</strong> (goal: predict RainTomorrow).</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Set up Python environment: pandas, numpy, sklearn, matplotlib, joblib.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Load dataset: <code>df = pd.read_csv("weather.csv")</code></div></li>
+<li><div class="step-num">10</div><div class="step-txt">Initial inspection: <code>df.head()</code>, <code>df.info()</code>, <code>df.isnull().sum()</code>, remove duplicates.</div></li>
+<li><div class="step-num">11</div><div class="step-txt">Define <strong>ML Problem Statement:</strong> "Predict whether it will rain tomorrow based on weather features." (Binary Classification)</div></li>
+<li><div class="step-num">12</div><div class="step-txt">Perform <strong>Feature Selection:</strong> encode categorical columns with LabelEncoder, define X and y (target = RainTomorrow).</div></li>
+<li><div class="step-num">13</div><div class="step-txt">Split dataset: <code>train_test_split(X, y, test_size=0.2, random_state=42)</code></div></li>
+<li><div class="step-num">14</div><div class="step-txt">Implement <strong>baseline model:</strong> LogisticRegression without scaling → print accuracy.</div></li>
+<li><div class="step-num">15</div><div class="step-txt">Apply <strong>feature scaling</strong> with StandardScaler → retrain LogisticRegression → compare accuracy before vs after scaling.</div></li>
+<li><div class="step-num">16</div><div class="step-txt">Train <strong>at least 2 optimized models:</strong> RandomForestClassifier + GradientBoostingClassifier on scaled data.</div></li>
+<li><div class="step-num">17</div><div class="step-txt">Evaluate model performance: <code>accuracy_score()</code>, <code>classification_report()</code>, <code>confusion_matrix()</code></div></li>
+<li><div class="step-num">18</div><div class="step-txt">Visualize model performance: bar chart comparing model accuracies using <code>plt.bar()</code></div></li>
+<li><div class="step-num">19</div><div class="step-txt">Detect <strong>overfitting/underfitting:</strong> if train_acc > test_acc + 0.10 → overfitting. If both < 0.70 → underfitting.</div></li>
+<li><div class="step-num">20</div><div class="step-txt">Save & deploy final model: <code>joblib.dump(best_model, "weather_prediction_model.pkl")</code></div></li>
+<li><div class="step-num">21-23</div><div class="step-txt">Submit output, shut down computer, clean workplace and tools.</div></li>
+</ul>
+<div class="hl" style="margin-top:12px"><strong>Key Libraries:</strong> sklearn, pandas, joblib<br><strong>Output File:</strong> weather_prediction_model.pkl</div>
+</div></div>
+
+<!-- JOB 03 -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J03</div><div class="q-text">Job 03 — Sentiment Analysis System (Deep Learning)<span class="q-sub">LSTM · Bidirectional · TensorFlow/Keras</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Working Procedure (21 Steps)</div>
+<ul class="steps-list">
+<li><div class="step-num">1-6</div><div class="step-txt">PPE, OHS, connections, start computer, fix errors, collect sentiment.csv dataset.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Create a <strong>Sentiment Analysis System using Deep Learning</strong>.</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Set up environment: TensorFlow/Keras, pandas, numpy, sklearn, matplotlib, pickle.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Load & inspect: <code>df = pd.read_csv("sentiment.csv")</code> → check head, info, nulls.</div></li>
+<li><div class="step-num">10</div><div class="step-txt"><strong>Data preparation:</strong> drop duplicates, drop nulls, encode labels with LabelEncoder.</div></li>
+<li><div class="step-num">11</div><div class="step-txt"><strong>Feature extraction:</strong> Tokenization with Keras Tokenizer (vocab_size=10000), pad_sequences (max_length=100).</div></li>
+<li><div class="step-num">12</div><div class="step-txt"><strong>Split dataset (3-way):</strong> 70% train, 15% validation, 15% test (mandatory for Deep Learning).</div></li>
+<li><div class="step-num">13</div><div class="step-txt">Design <strong>deep learning architecture:</strong> Embedding → Bidirectional LSTM(64) → Dropout(0.5) → Dense(64, relu) → Dropout(0.3) → Dense(softmax).</div></li>
+<li><div class="step-num">14</div><div class="step-txt"><strong>Compile & train:</strong> loss='sparse_categorical_crossentropy', optimizer='adam', epochs=20, batch_size=32.</div></li>
+<li><div class="step-num">15</div><div class="step-txt"><strong>Evaluate:</strong> model.evaluate() → test loss and accuracy. Print classification_report and confusion_matrix.</div></li>
+<li><div class="step-num">16</div><div class="step-txt"><strong>Visualize:</strong> plot Training vs Validation Accuracy and Training vs Validation Loss curves.</div></li>
+<li><div class="step-num">17</div><div class="step-txt">Detect overfitting: if train_acc > val_acc + 0.10 → overfitting. Both < 0.70 → underfitting.</div></li>
+<li><div class="step-num">18</div><div class="step-txt">Save model: <code>model.save("sentiment_model.h5")</code> + save tokenizer and label_encoder with pickle.</div></li>
+<li><div class="step-num">19-21</div><div class="step-txt">Submit output, shut down, clean workplace.</div></li>
+</ul>
+<div class="hl" style="margin-top:12px"><strong>Key Libraries:</strong> TensorFlow/Keras, sklearn, pickle<br><strong>Output File:</strong> sentiment_analysis_model.h5</div>
+</div></div>
+
+</div><!-- /cards set01 -->
+
+<div class="sec-label" data-cat="job">Additional Jobs</div>
+<div class="cards">
+
+<!-- HOUSE PRICE ML -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J04</div><div class="q-text">House Price Prediction — Machine Learning<span class="q-sub">Regression · California Housing Dataset · Sklearn</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Key Steps Summary</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Set up environment: NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn.</div></li>
+<li><div class="step-num">2</div><div class="step-txt">Fetch dataset: <code>from sklearn.datasets import fetch_california_housing</code> — <strong>NOT from external CSV</strong>.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Initial inspection: shape, missing values, summary statistics.</div></li>
+<li><div class="step-num">4</div><div class="step-txt"><strong>Problem Statement:</strong> Regression — Predict Median House Value.</div></li>
+<li><div class="step-num">5</div><div class="step-txt">EDA: visualize feature distributions, compute correlation matrix for feature selection.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Split: 80% train, 20% test.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Baseline: <strong>Linear Regression</strong> without scaling → compute R², MAE, MSE, RMSE.</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Apply <strong>StandardScaler</strong> → compare performance before vs after scaling.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Train 3+ additional models: <strong>Decision Tree, Random Forest Regressor</strong>.</div></li>
+<li><div class="step-num">10</div><div class="step-txt">Evaluate: R², MAE, MSE, RMSE for all models.</div></li>
+<li><div class="step-num">11</div><div class="step-txt">Visualize: <strong>Actual vs Predicted plots</strong>.</div></li>
+<li><div class="step-num">12</div><div class="step-txt">Detect overfitting/underfitting: compare train vs test performance.</div></li>
+<li><div class="step-num">13</div><div class="step-txt">Hyperparameter tuning on best model.</div></li>
+<li><div class="step-num">14</div><div class="step-txt">Save model: <code>joblib.dump(model, "house_model.pkl")</code></div></li>
+</ul>
+<div class="hl" style="margin-top:12px"><strong>Metrics:</strong> R², MAE, MSE, RMSE | <strong>Dataset:</strong> sklearn built-in California Housing</div>
+</div></div>
+
+<!-- HOUSE PRICE DL -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J05</div><div class="q-text">House Price Prediction — Deep Learning<span class="q-sub">DNN · TensorFlow/Keras · California Housing</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Key Steps Summary</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Fetch California Housing from sklearn (<strong>not CSV</strong>). Set up TensorFlow/Keras environment.</div></li>
+<li><div class="step-num">2</div><div class="step-txt">Prepare data: handle missing values, normalization, feature scaling.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Split 3-way: <strong>70% train, 15% validation, 15% test</strong>.</div></li>
+<li><div class="step-num">4</div><div class="step-txt">Design <strong>DNN architecture:</strong> Input layer → Hidden layers (ReLU) → Output layer (Linear for regression).</div></li>
+<li><div class="step-num">5</div><div class="step-txt">Compile: <strong>loss=MSE, optimizer=Adam</strong>.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Train and monitor training + validation loss curves.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Evaluate: R², MAE, RMSE on test data.</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Detect overfitting → apply <strong>Dropout, Early Stopping</strong>.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Compare DL performance with traditional ML models.</div></li>
+<li><div class="step-num">10</div><div class="step-txt">Save trained model.</div></li>
+</ul>
+</div></div>
+
+<!-- BREAST CANCER STATS -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J06</div><div class="q-text">Mathematics for AI — Breast Cancer Statistical Analysis<span class="q-sub">Statistics · Probability · Hypothesis Testing</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Key Steps Summary</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Load Breast Cancer Dataset. Initial inspection (shape, types, missing, stats).</div></li>
+<li><div class="step-num">2</div><div class="step-txt">Compute <strong>mean, median, mode, variance, std</strong> for all numerical features.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Compute <strong>covariance</strong> between selected variable pairs and interpret.</div></li>
+<li><div class="step-num">4</div><div class="step-txt">Perform <strong>hypothesis testing (t-test)</strong> to compare two selected groups.</div></li>
+<li><div class="step-num">5</div><div class="step-txt">Calculate <strong>confidence intervals (95%)</strong> for selected features.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Analyse <strong>skewness and kurtosis</strong>. Compute conditional probability.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Apply <strong>Bayes' Theorem</strong> to calculate posterior probability.</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Plot <strong>Normal Distribution and Binomial Distribution</strong> curves and compare.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Save all outputs to <code>math_ai_assessment_results.pdf</code>.</div></li>
+</ul>
+</div></div>
+
+<!-- BREAST CANCER ML -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J07</div><div class="q-text">Breast Cancer Diagnosis — Machine Learning<span class="q-sub">Binary Classification · Malignant vs Benign</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Key Steps Summary</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Load Breast Cancer CSV. Remove ID column. Encode target: M=1, B=0.</div></li>
+<li><div class="step-num">2</div><div class="step-txt"><strong>Problem:</strong> Binary Classification — predict Malignant or Benign.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Feature selection using correlation matrix. Split 80:20.</div></li>
+<li><div class="step-num">4</div><div class="step-txt">Baseline: <strong>Logistic Regression</strong> without scaling.</div></li>
+<li><div class="step-num">5</div><div class="step-txt">Apply <strong>StandardScaler</strong>, compare performance before/after.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Train 2+ models: <strong>Decision Tree, Random Forest, SVM</strong>.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Evaluate: Accuracy, Precision, Recall, F1-score, Confusion Matrix.</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Visualize: Confusion Matrix heatmap, <strong>ROC Curve</strong>.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Hyperparameter tuning on best model. Save as .pkl/.joblib.</div></li>
+<li><div class="step-num">10</div><div class="step-txt">Report: explain medical implications of <strong>false positives vs false negatives</strong>.</div></li>
+</ul>
+<div class="hl" style="margin-top:12px"><strong>Metrics:</strong> Accuracy, Precision, Recall, F1, Confusion Matrix, ROC</div>
+</div></div>
+
+<!-- BREAST CANCER DL -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">J08</div><div class="q-text">Breast Cancer Diagnosis — Deep Learning<span class="q-sub">Binary Classification · DNN · Sigmoid Output</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Key Steps Summary</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Load CSV, remove ID column, encode M=1/B=0, normalize/standardize features.</div></li>
+<li><div class="step-num">2</div><div class="step-txt">EDA: visualize feature distributions and correlations.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Split <strong>70:15:15</strong> (train, validation, test) — mandatory for DL.</div></li>
+<li><div class="step-num">4</div><div class="step-txt">DNN Architecture: Input → At least <strong>2 hidden layers (ReLU)</strong> → Output (Sigmoid).</div></li>
+<li><div class="step-num">5</div><div class="step-txt">Compile: <strong>Binary Crossentropy loss, Adam optimizer</strong>.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Train, monitor loss and accuracy curves.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Evaluate: Accuracy, Precision, Recall, F1, Confusion Matrix.</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Apply regularization if overfitting: <strong>Dropout, Early Stopping, L2</strong>.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Compare performance before/after regularization.</div></li>
+<li><div class="step-num">10</div><div class="step-txt">Report: architecture choice, performance, medical significance of FP vs FN.</div></li>
+</ul>
+</div></div>
+
+<!-- AR JOB -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">J09</div><div class="q-text">Job 04 — AR Application (Augmented Reality)<span class="q-sub">Unity · ARKit/ARCore · Surface Detection</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Key Steps</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Check AR device, power, peripherals (phone/tablet, headset, controller).</div></li>
+<li><div class="step-num">2</div><div class="step-txt">Open Unity AR project on system.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Ensure <strong>AR tracking is enabled and calibrated</strong> (camera tracking, surface detection).</div></li>
+<li><div class="step-num">4</div><div class="step-txt">Load pre-developed AR application. Verify all objects load correctly.</div></li>
+<li><div class="step-num">5</div><div class="step-txt">Identify interactive objects in the AR environment.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Demonstrate <strong>surface detection</strong> — point device to floor/table.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Place <strong>virtual 3D objects</strong> on detected surface.</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Perform at least one <strong>user interaction</strong> (tap, rotate, scale).</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Explain scene structure, tracking logic, interaction implementation.</div></li>
+<li><div class="step-num">10</div><div class="step-txt">Identify one <strong>safety consideration</strong> (motion sickness, eye strain).</div></li>
+<li><div class="step-num">11</div><div class="step-txt">Identify one <strong>limitation</strong> (lighting conditions, object scale constraints).</div></li>
+<li><div class="step-num">12</div><div class="step-txt">Demonstrate correct <strong>shutdown procedure</strong>. Save logs/screenshots.</div></li>
+</ul>
+</div></div>
+
+<!-- VR JOB -->
+<div class="card" data-cat="job"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-vr">J10</div><div class="q-text">Job 05 — VR Application (Virtual Reality)<span class="q-sub">Unity · VR Headset · Controller Interaction</span></div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Key Steps</div>
+<ul class="steps-list">
+<li><div class="step-num">1</div><div class="step-txt">Check VR device, power supply, peripherals (headset, hand controllers).</div></li>
+<li><div class="step-num">2</div><div class="step-txt">Open Unity VR project. Check for software/device errors.</div></li>
+<li><div class="step-num">3</div><div class="step-txt">Ensure <strong>VR tracking is enabled and calibrated</strong>.</div></li>
+<li><div class="step-num">4</div><div class="step-txt">Load pre-developed VR application. Inspect scene.</div></li>
+<li><div class="step-num">5</div><div class="step-txt">Identify and verify <strong>interactive objects</strong>.</div></li>
+<li><div class="step-num">6</div><div class="step-txt">Demonstrate tracking and place virtual 3D objects.</div></li>
+<li><div class="step-num">7</div><div class="step-txt">Perform at least one <strong>user interaction</strong> (tap, rotate, scale).</div></li>
+<li><div class="step-num">8</div><div class="step-txt">Explain scene structure, tracking logic, interaction implementation to assessor.</div></li>
+<li><div class="step-num">9</div><div class="step-txt">Identify safety consideration and limitation of the prototype.</div></li>
+<li><div class="step-num">10</div><div class="step-txt">Demonstrate shutdown procedure. Save logs. Clean workstation.</div></li>
+</ul>
+<div class="hl" style="margin-top:12px"><strong>Hardware needed:</strong> VR headset, hand controllers, CCT/IP camera, workstation</div>
+</div></div>
+
+</div><!-- /cards jobs -->
+</div><!-- /page jobs -->
+
+
+<!-- ████████████████ PAGE: CODES ████████████████ -->
+<div class="page" id="page-codes">
+<div class="page-banner">
+  <h1>💻 Python Source Codes</h1>
+  <p>All 3 complete scripts with line-by-line explanation</p>
+  <div class="badge-row">
+    <span class="badge b-py">Population Analysis</span>
+    <span class="badge b-py">Weather Prediction</span>
+    <span class="badge b-py">Sentiment Analysis DL</span>
   </div>
-
-  <div class="card" data-cat="vr" data-q="37">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q37</div>
-      <div class="q-text">Differentiate inside-out and outside-in tracking.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-vr">Inside-Out Tracking</div>Cameras/sensors are mounted <em>ON the headset</em>. Tracks the environment from inside. No external setup needed. More portable.<br><br>Example: Meta Quest</div>
-          <div class="col-box"><div class="col-title col-title-vr">Outside-In Tracking</div>External base stations or cameras track the headset/controllers. Requires room setup. More precise.<br><br>Example: HTC Vive, Valve Index</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="38">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q38</div>
-      <div class="q-text">What is the difference between navigation and manipulation interfaces?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-vr">Navigation Interface</div>Controls the user's <em>viewpoint and movement</em> through virtual space.<br>Example: teleportation, joystick locomotion, flying.</div>
-          <div class="col-box"><div class="col-title col-title-vr">Manipulation Interface</div>Allows the user to <em>interact with virtual objects</em> — grab, move, rotate, scale.<br>Example: picking up objects, drawing in VR.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="39">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q39</div>
-      <div class="q-text">What is cybersickness, and what causes it?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <strong>Cybersickness</strong> (VR sickness) refers to nausea, disorientation, or discomfort experienced in VR environments.
-        <div class="highlight-box">
-          <strong>Cause:</strong> Sensory conflict — the visual system perceives motion in VR while the vestibular system (inner ear) detects no physical movement.
-        </div>
-        Worsened by: <em>high latency, low frame rates, large field-of-view motion, artificial locomotion</em>.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="40">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q40</div>
-      <div class="q-text">What is the difference between mobile and high-end VR platforms?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-vr">Mobile VR</div>Uses smartphone or standalone headset as processor/display. Low cost, portable, but limited processing power and graphics.<br>Example: Google Cardboard, Samsung Gear VR</div>
-          <div class="col-box"><div class="col-title col-title-vr">High-End VR</div>Tethered to a powerful PC/console. Higher fidelity, better tracking, more immersive. Expensive, less portable.<br>Example: Valve Index, Meta Quest Pro</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="41">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q41</div>
-      <div class="q-text">Explain the mobile AR platform briefly.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Mobile AR overlays digital content onto the real world using a <strong>smartphone's camera, gyroscope, and accelerometer</strong>.
-        <div class="formula-block">Key Technology: SLAM (Simultaneous Localization and Mapping)
-  → Detects surfaces and tracks environment in real time
-
-Platforms:
-  • ARKit  (Apple / iOS)
-  • ARCore (Google / Android)</div>
-        Used for: object placement, navigation overlays, gaming (Pokémon Go), retail try-on apps.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="42">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q42</div>
-      <div class="q-text">What is inertial full-body tracking?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        Inertial full-body tracking uses <strong>IMU (Inertial Measurement Unit) sensors</strong> placed on multiple body segments (limbs, torso, head) to capture movement.
-        <div class="highlight-box">
-          <strong>IMU = Accelerometer + Gyroscope</strong><br>
-          Measures acceleration and rotation to reconstruct body pose.
-        </div>
-        <strong>Advantages:</strong> No external cameras needed — fully portable.<br>
-        <strong>Limitation:</strong> Prone to drift over time. Used in motion capture and VR full-body avatars.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="43">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q43</div>
-      <div class="q-text">What is the role of a graphics accelerator (GPU)?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        A <strong>GPU (Graphics Processing Unit)</strong> handles parallel mathematical computations required for 3D rendering:
-        <div class="formula-block">Tasks: Vertex transformation, shader computation,
-       texture mapping, rasterization, lighting
-
-In VR specifically:
-  → Must render TWO eye views simultaneously
-  → Minimum 90 FPS required to maintain immersion
-  → Low GPU performance = lag = cybersickness</div>
-        It offloads rendering work from the CPU, enabling real-time high-quality visuals.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="44">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q44</div>
-      <div class="q-text">Differentiate co-located and distributed virtual environments.</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-vr">Co-located</div>Multiple users share the <em>same physical space</em> and interact in a shared virtual environment together.<br>Example: Collaborative VR in a lab room.</div>
-          <div class="col-box"><div class="col-title col-title-vr">Distributed</div>Users are in <em>different physical locations</em>, connected through a network to interact in a shared virtual space.<br>Example: Online VR meetings, multiplayer VR games.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="45">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q45</div>
-      <div class="q-text">How do you configure Windows Mixed Reality (WMR)?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        <div class="formula-block">Step 1: Connect headset via USB 3.0 and HDMI/DisplayPort to PC.
-Step 2: Open "Mixed Reality Portal" app (built into Windows 10/11).
-Step 3: Follow the setup wizard to define boundary
-        (room-scale or standing-only mode).
-Step 4: Pair and calibrate the motion controllers.
-Step 5: Verify performance and display settings in the portal.</div>
-        The Mixed Reality Portal guides you through the full configuration process.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="vr" data-q="46">
-    <div class="card-header" onclick="toggle(this)">
-      <div class="qnum qnum-vr">Q46</div>
-      <div class="q-text">What is Singular Value Decomposition (SVD)?</div>
-      <div class="expand-icon">▼</div>
-    </div>
-    <div class="card-body">
-      <div class="answer-label">✓ Answer</div>
-      <div class="answer-text">
-        SVD is a <strong>matrix factorization technique</strong> that decomposes any matrix A into three matrices:
-        <div class="formula-block">A = U · Σ · Vᵀ
-
-Where:
-  U  = Left singular vectors  (orthogonal matrix)
-  Σ  = Diagonal matrix of singular values (non-negative, sorted descending)
-  Vᵀ = Right singular vectors (orthogonal matrix)</div>
-        <div class="two-col">
-          <div class="col-box"><div class="col-title col-title-vr">Applications</div>• Dimensionality reduction (like PCA)<br>• Noise filtering<br>• Recommender systems<br>• Image compression</div>
-          <div class="col-box"><div class="col-title col-title-vr">Key Property</div>Works on <em>any</em> matrix (not just square). The singular values in Σ represent the "importance" of each dimension.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<div style="height:60px"></div>
+<div class="sec-label">Python Scripts</div>
+<div class="cards">
+
+<!-- CODE 01: POPULATION -->
+<div class="card" data-cat="code"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-code">C01</div><div class="q-text">Population Data Analysis — Full Code<span class="q-sub">Job 01 · pandas · matplotlib · statistics</span></div><div class="chevron">▼</div></div>
+<div class="card-body">
+<div class="ans-lbl">📄 Complete Script (population.py)</div>
+<div class="code-block">
+<div class="code-block-hdr"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+<pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># 1. Load dataset</span>
+df = pd.<span class="fn">read_csv</span>(<span class="str">"population.csv"</span>)
+
+<span class="cm"># 2. Initial inspection</span>
+<span class="fn">print</span>(df.<span class="fn">head</span>())
+<span class="fn">print</span>(df.<span class="fn">info</span>())
+<span class="fn">print</span>(df.<span class="fn">describe</span>(include=<span class="str">"all"</span>))
+<span class="fn">print</span>(df.<span class="fn">isnull</span>().<span class="fn">sum</span>())
+
+<span class="cm"># 3. Clean dataset</span>
+df = df.<span class="fn">drop_duplicates</span>()
+df[<span class="str">"Continent"</span>] = df[<span class="str">"Continent"</span>].<span class="fn">fillna</span>(<span class="str">"Unknown"</span>)
+
+<span class="cm"># 4. Rename columns: "2020 Population" → "2020"</span>
+updated_columns = []
+<span class="kw">for</span> col <span class="kw">in</span> df.columns:
+    <span class="kw">if</span> <span class="str">"Population"</span> <span class="kw">in</span> col:
+        updated_columns.<span class="fn">append</span>(col.<span class="fn">replace</span>(<span class="str">" Population"</span>, <span class="str">""</span>))
+    <span class="kw">else</span>:
+        updated_columns.<span class="fn">append</span>(col)
+df.columns = updated_columns
+
+<span class="cm"># 5. Detect year columns automatically</span>
+year_cols = [col <span class="kw">for</span> col <span class="kw">in</span> df.columns <span class="kw">if</span> col.<span class="fn">isdigit</span>()]
+
+<span class="cm"># 6. Convert year columns to numeric</span>
+<span class="kw">for</span> col <span class="kw">in</span> year_cols:
+    df[col] = pd.<span class="fn">to_numeric</span>(df[col], errors=<span class="str">"coerce"</span>)
+
+<span class="cm"># 7. Statistics by continent</span>
+continent_stats = df.<span class="fn">groupby</span>(<span class="str">"Continent"</span>)[year_cols].<span class="fn">agg</span>(
+    [<span class="str">"mean"</span>, <span class="str">"median"</span>, <span class="str">"var"</span>, <span class="str">"std"</span>]
+)
+<span class="fn">print</span>(continent_stats)
+
+<span class="cm"># 8. Cumulative population growth</span>
+first_year = year_cols[<span class="num">0</span>]
+last_year  = year_cols[-<span class="num">1</span>]
+df[<span class="str">"Cumulative_Growth"</span>] = df[last_year] - df[first_year]
+df[<span class="str">"Cumulative_Growth_%"</span>] = ((df[last_year] - df[first_year]) / df[first_year]) * <span class="num">100</span>
+
+<span class="cm"># 9. Save cleaned dataset</span>
+df.<span class="fn">to_csv</span>(<span class="str">"processed_data.csv"</span>, index=<span class="kw">False</span>)
+
+<span class="cm"># 10. Histogram: continent-wise population</span>
+<span class="kw">for</span> year <span class="kw">in</span> [first_year, last_year]:
+    plt.<span class="fn">figure</span>(figsize=(<span class="num">10</span>, <span class="num">6</span>))
+    <span class="kw">for</span> continent <span class="kw">in</span> df[<span class="str">"Continent"</span>].<span class="fn">unique</span>():
+        subset = df[df[<span class="str">"Continent"</span>] == continent]
+        plt.<span class="fn">hist</span>(subset[year], alpha=<span class="num">0.5</span>, label=continent)
+    plt.<span class="fn">title</span>(<span class="fn">f</span><span class="str">"Continent-wise Population in {year}"</span>)
+    plt.<span class="fn">xlabel</span>(<span class="str">"Population"</span>); plt.<span class="fn">ylabel</span>(<span class="str">"Frequency"</span>)
+    plt.<span class="fn">legend</span>(); plt.<span class="fn">show</span>()
+
+<span class="cm"># 11. Timeline of continent-wise population</span>
+long_df = df.<span class="fn">melt</span>(id_vars=[<span class="str">"Country"</span>,<span class="str">"Continent"</span>],
+                  value_vars=year_cols, var_name=<span class="str">"Year"</span>, value_name=<span class="str">"Population"</span>)
+long_df[<span class="str">"Year"</span>] = long_df[<span class="str">"Year"</span>].<span class="fn">astype</span>(<span class="fn">int</span>)
+continent_tl = long_df.<span class="fn">groupby</span>([<span class="str">"Continent"</span>,<span class="str">"Year"</span>])[<span class="str">"Population"</span>].<span class="fn">sum</span>().<span class="fn">reset_index</span>()
+
+plt.<span class="fn">figure</span>(figsize=(<span class="num">12</span>,<span class="num">6</span>))
+<span class="kw">for</span> c <span class="kw">in</span> continent_tl[<span class="str">"Continent"</span>].<span class="fn">unique</span>():
+    d = continent_tl[continent_tl[<span class="str">"Continent"</span>]==c]
+    plt.<span class="fn">plot</span>(d[<span class="str">"Year"</span>], d[<span class="str">"Population"</span>], marker=<span class="str">"o"</span>, label=c)
+plt.<span class="fn">title</span>(<span class="str">"Timeline: Continent-wise Population"</span>)
+plt.<span class="fn">legend</span>(); plt.<span class="fn">grid</span>(<span class="kw">True</span>); plt.<span class="fn">show</span>()
+
+<span class="cm"># 12. Correlation matrix</span>
+corr = df[year_cols].<span class="fn">corr</span>()
+<span class="fn">print</span>(corr)
+plt.<span class="fn">figure</span>(figsize=(<span class="num">10</span>,<span class="num">8</span>))
+plt.<span class="fn">imshow</span>(corr, cmap=<span class="str">"viridis"</span>)
+plt.<span class="fn">colorbar</span>()
+plt.<span class="fn">xticks</span>(<span class="fn">range</span>(<span class="fn">len</span>(year_cols)), year_cols, rotation=<span class="num">90</span>)
+plt.<span class="fn">yticks</span>(<span class="fn">range</span>(<span class="fn">len</span>(year_cols)), year_cols)
+plt.<span class="fn">title</span>(<span class="str">"Correlation Matrix of Population Columns"</span>)
+plt.<span class="fn">show</span>()</pre>
+</div>
+<div class="hl" style="margin-top:10px"><strong>Key methods used:</strong> groupby().agg(), melt(), corr(), to_csv(), hist(), imshow()</div>
+</div></div>
+
+<!-- CODE 02: WEATHER -->
+<div class="card" data-cat="code"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-code">C02</div><div class="q-text">Weather Prediction System — Full Code<span class="q-sub">Job 02 · sklearn · RandomForest · GradientBoosting</span></div><div class="chevron">▼</div></div>
+<div class="card-body">
+<div class="ans-lbl">📄 Complete Script (Job02.py)</div>
+<div class="code-block">
+<div class="code-block-hdr"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+<pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> LabelEncoder, StandardScaler
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> accuracy_score, classification_report, confusion_matrix
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LogisticRegression
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier, GradientBoostingClassifier
+<span class="kw">import</span> joblib
+
+<span class="cm"># 1. Load weather dataset</span>
+df = pd.<span class="fn">read_csv</span>(<span class="str">"weather.csv"</span>)
+<span class="fn">print</span>(df.<span class="fn">head</span>()); <span class="fn">print</span>(df.<span class="fn">info</span>()); <span class="fn">print</span>(df.<span class="fn">isnull</span>().<span class="fn">sum</span>())
+
+<span class="cm"># 2. Problem Statement</span>
+<span class="fn">print</span>(<span class="str">"Predict whether it will rain tomorrow."</span>)
+
+<span class="cm"># 3. Clean & encode categorical columns</span>
+df = df.<span class="fn">drop_duplicates</span>()
+label_encoders = {}
+<span class="kw">for</span> col <span class="kw">in</span> df.<span class="fn">select_dtypes</span>(include=[<span class="str">"object"</span>]).columns:
+    le = <span class="cls">LabelEncoder</span>()
+    df[col] = le.<span class="fn">fit_transform</span>(df[col])
+    label_encoders[col] = le
+
+<span class="cm"># 4. Define features & target</span>
+target = <span class="str">"RainTomorrow"</span>
+X = df.<span class="fn">drop</span>(target, axis=<span class="num">1</span>)
+y = df[target]
+
+<span class="cm"># 5. Train-test split</span>
+X_train, X_test, y_train, y_test = <span class="fn">train_test_split</span>(
+    X, y, test_size=<span class="num">0.2</span>, random_state=<span class="num">42</span>)
+
+<span class="cm"># 6. Baseline model (no scaling)</span>
+baseline = <span class="cls">LogisticRegression</span>(max_iter=<span class="num">1000</span>)
+baseline.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(<span class="str">"Baseline Accuracy:"</span>, <span class="fn">accuracy_score</span>(y_test, baseline.<span class="fn">predict</span>(X_test)))
+
+<span class="cm"># 7. Feature scaling</span>
+scaler = <span class="cls">StandardScaler</span>()
+X_train_s = scaler.<span class="fn">fit_transform</span>(X_train)
+X_test_s  = scaler.<span class="fn">transform</span>(X_test)
+
+scaled_model = <span class="cls">LogisticRegression</span>(max_iter=<span class="num">1000</span>)
+scaled_model.<span class="fn">fit</span>(X_train_s, y_train)
+<span class="fn">print</span>(<span class="str">"After Scaling Accuracy:"</span>, <span class="fn">accuracy_score</span>(y_test, scaled_model.<span class="fn">predict</span>(X_test_s)))
+
+<span class="cm"># 8. Optimized models</span>
+models = {
+    <span class="str">"Random Forest"</span>:      <span class="cls">RandomForestClassifier</span>(random_state=<span class="num">42</span>),
+    <span class="str">"Gradient Boosting"</span>:  <span class="cls">GradientBoostingClassifier</span>(random_state=<span class="num">42</span>)
+}
+results = {}
+<span class="kw">for</span> name, model <span class="kw">in</span> models.<span class="fn">items</span>():
+    model.<span class="fn">fit</span>(X_train_s, y_train)
+    train_acc = <span class="fn">accuracy_score</span>(y_train, model.<span class="fn">predict</span>(X_train_s))
+    test_acc  = <span class="fn">accuracy_score</span>(y_test,  model.<span class="fn">predict</span>(X_test_s))
+    results[name] = test_acc
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"\n{name}\nTrain:{train_acc:.3f} Test:{test_acc:.3f}"</span>)
+    <span class="fn">print</span>(<span class="fn">classification_report</span>(y_test, model.<span class="fn">predict</span>(X_test_s)))
+    <span class="cm"># Overfitting/underfitting check</span>
+    <span class="kw">if</span> train_acc > test_acc + <span class="num">0.10</span>:
+        <span class="fn">print</span>(<span class="str">"⚠ Possible overfitting"</span>)
+    <span class="kw">elif</span> train_acc < <span class="num">0.70</span> <span class="kw">and</span> test_acc < <span class="num">0.70</span>:
+        <span class="fn">print</span>(<span class="str">"⚠ Possible underfitting"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"✓ Acceptable performance"</span>)
+
+<span class="cm"># 9. Visualize model performance</span>
+plt.<span class="fn">figure</span>(figsize=(<span class="num">8</span>,<span class="num">5</span>))
+plt.<span class="fn">bar</span>(results.<span class="fn">keys</span>(), results.<span class="fn">values</span>())
+plt.<span class="fn">title</span>(<span class="str">"Model Performance Comparison"</span>)
+plt.<span class="fn">ylabel</span>(<span class="str">"Accuracy"</span>); plt.<span class="fn">show</span>()
+
+<span class="cm"># 10. Save best model</span>
+best = <span class="fn">max</span>(results, key=results.<span class="fn">get</span>)
+joblib.<span class="fn">dump</span>(models[best], <span class="str">"weather_prediction_model.pkl"</span>)
+joblib.<span class="fn">dump</span>(scaler, <span class="str">"weather_scaler.pkl"</span>)
+joblib.<span class="fn">dump</span>(label_encoders, <span class="str">"label_encoders.pkl"</span>)
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Best Model: {best} — saved successfully."</span>)</pre>
+</div>
+</div></div>
+
+<!-- CODE 03: SENTIMENT -->
+<div class="card" data-cat="code"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-code">C03</div><div class="q-text">Sentiment Analysis — Deep Learning Full Code<span class="q-sub">Job 03 · LSTM · Bidirectional · TensorFlow/Keras</span></div><div class="chevron">▼</div></div>
+<div class="card-body">
+<div class="ans-lbl">📄 Complete Script (Job03.py)</div>
+<div class="code-block">
+<div class="code-block-hdr"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+<pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">import</span> pickle
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> LabelEncoder
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> classification_report, confusion_matrix
+<span class="kw">import</span> tensorflow <span class="kw">as</span> tf
+<span class="kw">from</span> tensorflow.keras.preprocessing.text <span class="kw">import</span> Tokenizer
+<span class="kw">from</span> tensorflow.keras.preprocessing.sequence <span class="kw">import</span> pad_sequences
+<span class="kw">from</span> tensorflow.keras.models <span class="kw">import</span> Sequential
+<span class="kw">from</span> tensorflow.keras.layers <span class="kw">import</span> Embedding, LSTM, Dense, Dropout, Bidirectional
+
+<span class="cm"># 1. Load dataset</span>
+df = pd.<span class="fn">read_csv</span>(<span class="str">"sentiment.csv"</span>)  <span class="cm"># columns: text, sentiment</span>
+df = df.<span class="fn">drop_duplicates</span>().<span class="fn">dropna</span>()
+
+<span class="cm"># 2. Prepare X and y</span>
+X = df[<span class="str">"text"</span>].<span class="fn">astype</span>(<span class="fn">str</span>)
+y = df[<span class="str">"sentiment"</span>]
+
+<span class="cm"># 3. Encode labels (positive=2, neutral=1, negative=0)</span>
+le = <span class="cls">LabelEncoder</span>()
+y = le.<span class="fn">fit_transform</span>(y)
+
+<span class="cm"># 4. Three-way split: 70% train, 15% val, 15% test</span>
+X_train, X_temp, y_train, y_temp = <span class="fn">train_test_split</span>(X, y, test_size=<span class="num">0.30</span>, random_state=<span class="num">42</span>)
+X_val,   X_test, y_val,   y_test = <span class="fn">train_test_split</span>(X_temp, y_temp, test_size=<span class="num">0.50</span>, random_state=<span class="num">42</span>)
+
+<span class="cm"># 5. Tokenization</span>
+vocab_size  = <span class="num">10000</span>
+max_length  = <span class="num">100</span>
+tokenizer   = <span class="cls">Tokenizer</span>(num_words=vocab_size, oov_token=<span class="str">"&lt;OOV&gt;"</span>)
+tokenizer.<span class="fn">fit_on_texts</span>(X_train)
+
+X_train_pad = <span class="fn">pad_sequences</span>(tokenizer.<span class="fn">texts_to_sequences</span>(X_train), maxlen=max_length)
+X_val_pad   = <span class="fn">pad_sequences</span>(tokenizer.<span class="fn">texts_to_sequences</span>(X_val),   maxlen=max_length)
+X_test_pad  = <span class="fn">pad_sequences</span>(tokenizer.<span class="fn">texts_to_sequences</span>(X_test),  maxlen=max_length)
+
+<span class="cm"># 6. Build model architecture</span>
+model = <span class="cls">Sequential</span>([
+    <span class="cls">Embedding</span>(vocab_size, <span class="num">64</span>, input_length=max_length),
+    <span class="cls">Bidirectional</span>(<span class="cls">LSTM</span>(<span class="num">64</span>)),
+    <span class="cls">Dropout</span>(<span class="num">0.5</span>),
+    <span class="cls">Dense</span>(<span class="num">64</span>, activation=<span class="str">"relu"</span>),
+    <span class="cls">Dropout</span>(<span class="num">0.3</span>),
+    <span class="cls">Dense</span>(<span class="fn">len</span>(np.<span class="fn">unique</span>(y)), activation=<span class="str">"softmax"</span>)
+])
+
+<span class="cm"># 7. Compile</span>
+model.<span class="fn">compile</span>(loss=<span class="str">"sparse_categorical_crossentropy"</span>, optimizer=<span class="str">"adam"</span>, metrics=[<span class="str">"accuracy"</span>])
+
+<span class="cm"># 8. Train</span>
+history = model.<span class="fn">fit</span>(X_train_pad, y_train,
+                    validation_data=(X_val_pad, y_val),
+                    epochs=<span class="num">20</span>, batch_size=<span class="num">32</span>)
+
+<span class="cm"># 9. Evaluate</span>
+loss, acc = model.<span class="fn">evaluate</span>(X_test_pad, y_test)
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Test Accuracy: {acc:.4f}"</span>)
+y_pred = np.<span class="fn">argmax</span>(model.<span class="fn">predict</span>(X_test_pad), axis=<span class="num">1</span>)
+<span class="fn">print</span>(<span class="fn">classification_report</span>(y_test, y_pred))
+<span class="fn">print</span>(<span class="fn">confusion_matrix</span>(y_test, y_pred))
+
+<span class="cm"># 10. Visualize Accuracy</span>
+plt.<span class="fn">figure</span>(figsize=(<span class="num">8</span>,<span class="num">5</span>))
+plt.<span class="fn">plot</span>(history.history[<span class="str">"accuracy"</span>],     label=<span class="str">"Train Accuracy"</span>)
+plt.<span class="fn">plot</span>(history.history[<span class="str">"val_accuracy"</span>], label=<span class="str">"Val Accuracy"</span>)
+plt.<span class="fn">title</span>(<span class="str">"Accuracy Curve"</span>); plt.<span class="fn">legend</span>(); plt.<span class="fn">show</span>()
+
+<span class="cm"># Visualize Loss</span>
+plt.<span class="fn">figure</span>(figsize=(<span class="num">8</span>,<span class="num">5</span>))
+plt.<span class="fn">plot</span>(history.history[<span class="str">"loss"</span>],     label=<span class="str">"Train Loss"</span>)
+plt.<span class="fn">plot</span>(history.history[<span class="str">"val_loss"</span>], label=<span class="str">"Val Loss"</span>)
+plt.<span class="fn">title</span>(<span class="str">"Loss Curve"</span>); plt.<span class="fn">legend</span>(); plt.<span class="fn">show</span>()
+
+<span class="cm"># 11. Detect overfitting/underfitting</span>
+train_a = history.history[<span class="str">"accuracy"</span>][-<span class="num">1</span>]
+val_a   = history.history[<span class="str">"val_accuracy"</span>][-<span class="num">1</span>]
+<span class="kw">if</span>   train_a > val_a + <span class="num">0.10</span>: <span class="fn">print</span>(<span class="str">"⚠ Overfitting detected"</span>)
+<span class="kw">elif</span> train_a < <span class="num">0.70</span>:          <span class="fn">print</span>(<span class="str">"⚠ Underfitting detected"</span>)
+<span class="kw">else</span>:                          <span class="fn">print</span>(<span class="str">"✓ Acceptable performance"</span>)
+
+<span class="cm"># 12. Save model and tokenizer</span>
+model.<span class="fn">save</span>(<span class="str">"sentiment_analysis_model.h5"</span>)
+<span class="kw">with</span> <span class="fn">open</span>(<span class="str">"tokenizer.pkl"</span>, <span class="str">"wb"</span>) <span class="kw">as</span> f: pickle.<span class="fn">dump</span>(tokenizer, f)
+<span class="kw">with</span> <span class="fn">open</span>(<span class="str">"label_encoder.pkl"</span>, <span class="str">"wb"</span>) <span class="kw">as</span> f: pickle.<span class="fn">dump</span>(le, f)
+<span class="fn">print</span>(<span class="str">"Model saved successfully."</span>)</pre>
+</div>
+<div class="hl" style="margin-top:10px"><strong>Model Architecture:</strong> Embedding(10000,64) → BiLSTM(64) → Dropout(0.5) → Dense(64,relu) → Dropout(0.3) → Dense(3,softmax)</div>
+</div></div>
+
+</div><!-- /cards codes -->
+
+<!-- KEY CONCEPTS FOR CODES -->
+<div class="sec-label">Key Code Concepts to Know</div>
+<div class="cards">
+
+<div class="card" data-cat="code"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-code">K01</div><div class="q-text">Overfitting vs Underfitting — Detection Logic</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Concept</div><div class="ans-text">
+<div class="formula">IF train_accuracy > test_accuracy + 0.10:
+    → OVERFITTING   (model memorized training data)
+
+ELIF train_accuracy &lt; 0.70 AND test_accuracy &lt; 0.70:
+    → UNDERFITTING  (model too simple)
+
+ELSE:
+    → ACCEPTABLE performance</div>
+<div class="two-col"><div class="col-box"><div class="col-title ct-py">Fix Overfitting</div>Dropout, Early Stopping, L2 Regularization, more data, simpler model.</div><div class="col-box"><div class="col-title ct-py">Fix Underfitting</div>More complex model, more epochs, more features, better feature engineering.</div></div>
+</div></div></div>
+
+<div class="card" data-cat="code"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-code">K02</div><div class="q-text">Evaluation Metrics Summary</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Metrics</div><div class="ans-text">
+<div class="formula">CLASSIFICATION:
+  Accuracy  = (TP + TN) / Total
+  Precision = TP / (TP + FP)   ← of predicted positive, how many correct
+  Recall    = TP / (TP + FN)   ← of actual positive, how many found
+  F1-Score  = 2 × (Precision × Recall) / (Precision + Recall)
+
+REGRESSION:
+  MAE  = mean |actual - predicted|
+  MSE  = mean (actual - predicted)²
+  RMSE = √MSE
+  R²   = 1 - (SS_res / SS_tot)   ← 1.0 = perfect</div>
+</div></div></div>
+
+<div class="card" data-cat="code"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-code">K03</div><div class="q-text">Train/Validation/Test Split — Why 3-way for DL?</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">✓ Concept</div><div class="ans-text">
+<div class="two-col"><div class="col-box"><div class="col-title ct-py">ML (2-way split)</div>Train (80%) + Test (20%)<br>Simpler models, quick eval.</div><div class="col-box"><div class="col-title ct-py">DL (3-way split)</div>Train (70%) + Validation (15%) + Test (15%)<br>Validation monitors during training to detect overfitting early.</div></div>
+<div class="formula">train_test_split(X, y, test_size=0.30)   # first split 70/30
+train_test_split(X_temp, y_temp, test_size=0.50)  # 30 → 15/15</div>
+</div></div></div>
+
+</div>
+</div><!-- /page codes -->
+
+
+<!-- ████████████████ PAGE: DATASETS ████████████████ -->
+<div class="page" id="page-datasets">
+<div class="page-banner">
+  <h1>📊 Dataset Reference</h1>
+  <p>Structure, columns and sample data for all datasets used in jobs</p>
+</div>
+
+<div class="sec-label">Dataset Structures</div>
+<div class="cards">
+
+<div class="card" data-cat="ds"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">DS1</div><div class="q-text">population.csv — Structure &amp; Sample Data</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Dataset Info</div>
+<div class="ans-text">
+<div class="hl"><strong>File:</strong> population.csv | <strong>Rows:</strong> 40 countries | <strong>Columns:</strong> 7</div>
+<table class="ds-table">
+<tr><th>Column Name</th><th>Type</th><th>Description</th></tr>
+<tr><td>Continent</td><td>string</td><td>Continent name (Asia, Africa, Europe, etc.)</td></tr>
+<tr><td>Country</td><td>string</td><td>Country name</td></tr>
+<tr><td>1900 Population</td><td>int</td><td>Population in year 1900 → renamed to "1900"</td></tr>
+<tr><td>1950 Population</td><td>int</td><td>Population in year 1950 → renamed to "1950"</td></tr>
+<tr><td>2000 Population</td><td>int</td><td>Population in year 2000 → renamed to "2000"</td></tr>
+<tr><td>2020 Population</td><td>int</td><td>Population in year 2020 → renamed to "2020"</td></tr>
+<tr><td>2022 Population</td><td>int</td><td>Population in year 2022 → renamed to "2022"</td></tr>
+</table>
+<div class="formula" style="margin-top:12px">Sample rows:
+Continent | Country    | 1900       | 2022
+Asia      | Bangladesh | 6,000,000  | 150,000,000
+Asia      | India      | 300,000,000| 1,410,000,000
+Africa    | Nigeria    | 18,000,000 | 225,000,000
+Europe    | Germany    | 56,000,000 | 84,000,000
+
+Continents: Asia, Africa, Europe, North America, South America, Oceania</div>
+<div class="hl" style="margin-top:8px"><strong>After rename:</strong> Column "2020 Population" becomes "2020" using <code>col.replace(" Population", "")</code></div>
+</div></div></div>
+
+<div class="card" data-cat="ds"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">DS2</div><div class="q-text">sentiment.csv — Structure &amp; Sample Data</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Dataset Info</div>
+<div class="ans-text">
+<div class="hl"><strong>File:</strong> sentiment.csv | <strong>Rows:</strong> ~150 samples | <strong>Columns:</strong> 2</div>
+<table class="ds-table">
+<tr><th>Column Name</th><th>Type</th><th>Description</th></tr>
+<tr><td>text</td><td>string</td><td>Review/feedback text (input feature)</td></tr>
+<tr><td>sentiment</td><td>string</td><td>Label: "positive", "negative", or "neutral"</td></tr>
+</table>
+<div class="formula" style="margin-top:12px">Sample rows:
+text                                    | sentiment
+"The service was excellent and fast"    | positive
+"Terrible experience and rude support"  | negative
+"The quality is average for this price" | neutral
+"I love this product, it works great"   | positive
+
+Classes: positive, negative, neutral (3-class classification)</div>
+<div class="hl" style="margin-top:8px"><strong>Preprocessing:</strong> LabelEncoder converts strings → integers (0,1,2). Tokenizer converts text → sequences. pad_sequences ensures uniform length (100).</div>
+</div></div></div>
+
+<div class="card" data-cat="ds"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-job">DS3</div><div class="q-text">weather.csv — Structure (Expected)</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Dataset Info</div>
+<div class="ans-text">
+<div class="hl"><strong>File:</strong> weather.csv | Provided by assessor | <strong>Target:</strong> RainTomorrow</div>
+<table class="ds-table">
+<tr><th>Column Type</th><th>Examples</th><th>Handling</th></tr>
+<tr><td>Numerical features</td><td>Temperature, Humidity, WindSpeed, Pressure</td><td>Used as-is after StandardScaler</td></tr>
+<tr><td>Categorical features</td><td>WindDir, RainToday, Location</td><td>LabelEncoder → integer</td></tr>
+<tr><td>Target column</td><td>RainTomorrow (Yes/No)</td><td>LabelEncoder → 0 or 1</td></tr>
+</table>
+<div class="formula" style="margin-top:12px">Problem: Binary Classification
+  → Predict RainTomorrow: Yes (1) or No (0)
+
+Model pipeline:
+  1. LabelEncode all categorical columns
+  2. Define X = all columns except RainTomorrow
+  3. Define y = RainTomorrow
+  4. StandardScaler on X
+  5. Train RandomForest + GradientBoosting</div>
+</div></div></div>
+
+<div class="card" data-cat="ds"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-py">DS4</div><div class="q-text">California Housing Dataset — sklearn built-in</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Dataset Info</div>
+<div class="ans-text">
+<div class="hl"><strong>Source:</strong> sklearn.datasets — <code>fetch_california_housing()</code> — NOT from CSV file!</div>
+<table class="ds-table">
+<tr><th>Feature</th><th>Description</th></tr>
+<tr><td>MedInc</td><td>Median income in block</td></tr>
+<tr><td>HouseAge</td><td>Median house age</td></tr>
+<tr><td>AveRooms</td><td>Average number of rooms</td></tr>
+<tr><td>AveBedrms</td><td>Average number of bedrooms</td></tr>
+<tr><td>Population</td><td>Block population</td></tr>
+<tr><td>AveOccup</td><td>Average house occupancy</td></tr>
+<tr><td>Latitude</td><td>Block latitude</td></tr>
+<tr><td>Longitude</td><td>Block longitude</td></tr>
+<tr><td><strong>Target</strong></td><td>Median house value (in $100,000s)</td></tr>
+</table>
+<div class="formula" style="margin-top:12px">from sklearn.datasets import fetch_california_housing
+data = fetch_california_housing()
+X = pd.DataFrame(data.data, columns=data.feature_names)
+y = data.target   # median house value
+
+Total samples: 20,640 | Features: 8 | Task: Regression</div>
+</div></div></div>
+
+<div class="card" data-cat="ds"><div class="card-hdr" onclick="tog(this)"><div class="qnum qnum-math">DS5</div><div class="q-text">Breast Cancer Dataset — Structure</div><div class="chevron">▼</div></div>
+<div class="card-body"><div class="ans-lbl">📋 Dataset Info</div>
+<div class="ans-text">
+<div class="hl"><strong>Source:</strong> Provided as CSV file OR from sklearn: <code>load_breast_cancer()</code></div>
+<table class="ds-table">
+<tr><th>Column</th><th>Description</th></tr>
+<tr><td>id</td><td>Remove this column (not useful)</td></tr>
+<tr><td>diagnosis</td><td>Target: M=Malignant(1), B=Benign(0)</td></tr>
+<tr><td>radius_mean, texture_mean…</td><td>30 numerical features about tumor cells</td></tr>
+</table>
+<div class="formula" style="margin-top:12px">Problem: Binary Classification
+  M (Malignant) = 1  →  Cancer detected
+  B (Benign)    = 0  →  No cancer
+
+Preprocessing:
+  df = df.drop('id', axis=1)
+  df['diagnosis'] = df['diagnosis'].map({'M':1, 'B':0})
+
+Medical implication:
+  False Negative (missed cancer) → more dangerous
+  False Positive (false alarm)   → causes anxiety/unnecessary treatment</div>
+</div></div></div>
+
+</div><!-- /cards datasets -->
+</div><!-- /page datasets -->
 
 <script>
-  let currentFilter = 'all';
-  let allExpanded = false;
+let activeFilter = 'all';
+let allExp = false;
 
-  function toggle(header) {
-    const card = header.parentElement;
-    card.classList.toggle('open');
-  }
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  event.target.classList.add('active');
+  updateCount();
+}
 
-  function setFilter(cat) {
-    currentFilter = cat;
-    document.querySelectorAll('.filter-btn').forEach(b => {
-      b.className = 'filter-btn';
-    });
-    if (cat === 'all')  document.getElementById('btn-all').classList.add('active');
-    if (cat === 'math') document.getElementById('btn-math').classList.add('active-math');
-    if (cat === 'py')   document.getElementById('btn-py').classList.add('active-py');
-    if (cat === 'vr')   document.getElementById('btn-vr').classList.add('active-vr');
-    filterCards();
-  }
+function tog(hdr) {
+  hdr.parentElement.classList.toggle('open');
+}
 
-  function filterCards() {
-    const q = document.getElementById('searchBox').value.toLowerCase();
-    let visible = 0;
-    document.querySelectorAll('.card').forEach(card => {
-      const cat = card.dataset.cat;
-      const text = card.innerText.toLowerCase();
-      const catMatch = (currentFilter === 'all' || cat === currentFilter);
-      const searchMatch = (q === '' || text.includes(q));
-      if (catMatch && searchMatch) {
-        card.classList.remove('hidden');
-        visible++;
-      } else {
-        card.classList.add('hidden');
-      }
-    });
-    document.querySelectorAll('.section-title').forEach(st => {
-      const cat = st.dataset.cat;
-      if (!cat) return;
-      const anyCatVisible = [...document.querySelectorAll(`.card[data-cat="${cat}"]`)]
-        .some(c => !c.classList.contains('hidden'));
-      st.classList.toggle('hidden', !anyCatVisible);
-    });
-    document.getElementById('count-display').textContent = visible + ' questions';
-  }
+function setFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('f-'+f).classList.add('active');
+  filterAll();
+}
 
-  function toggleAll() {
-    allExpanded = !allExpanded;
-    document.querySelectorAll('.card:not(.hidden)').forEach(c => {
-      if (allExpanded) c.classList.add('open');
-      else c.classList.remove('open');
-    });
-    document.querySelector('.expand-all-btn').textContent = allExpanded ? 'Collapse All' : 'Expand All';
-  }
+function filterAll() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  let vis = 0;
+  document.querySelectorAll('.card').forEach(c => {
+    const cat = c.dataset.cat || '';
+    const txt = c.innerText.toLowerCase();
+    const catOk = (activeFilter === 'all' || cat === activeFilter ||
+                   (activeFilter === 'job' && cat === 'job') ||
+                   (activeFilter === 'job' && cat === 'vr' && c.querySelector('.qnum-vr')));
+    const txtOk = (q === '' || txt.includes(q));
+    if (catOk && txtOk) { c.classList.remove('hidden'); vis++; }
+    else c.classList.add('hidden');
+  });
+  document.getElementById('countLbl').textContent = vis + ' results';
+}
+
+function toggleAll() {
+  allExp = !allExp;
+  document.querySelectorAll('.card:not(.hidden)').forEach(c => {
+    if (allExp) c.classList.add('open'); else c.classList.remove('open');
+  });
+  document.querySelector('.exp-btn').textContent = allExp ? 'Collapse All' : 'Expand All';
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+function updateCount() {
+  const vis = document.querySelectorAll('#page-' + getCurrentPage() + ' .card:not(.hidden)').length;
+  document.getElementById('countLbl').textContent = vis + ' items';
+}
+
+function getCurrentPage() {
+  const p = document.querySelector('.page.active');
+  return p ? p.id.replace('page-','') : 'written';
+}
+
+// init count
+window.addEventListener('load', () => {
+  const total = document.querySelectorAll('.card').length;
+  document.getElementById('countLbl').textContent = total + ' items total';
+});
 </script>
 </body>
 </html>
